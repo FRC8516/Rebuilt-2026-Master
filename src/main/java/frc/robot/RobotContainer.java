@@ -15,7 +15,10 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.Constants.*;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.FloorIntake;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -27,27 +30,33 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-   private final SendableChooser<Command> m_autoChooser;
-    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.50).in(RadiansPerSecond); // 1/2 of a rotation per second
-                                                                                      // max angular velocity
+  
+  private final SendableChooser<Command> m_autoChooser;
+  /* 
+  private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+  private double MaxAngularRate = RotationsPerSecond.of(0.50).in(RadiansPerSecond); // 1/2 of a rotation per second
+                                                                                    // max angular velocity
 
-    /* Setting up bindings for necessary control of the swerve drive platform */
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
-    private final Telemetry logger = new Telemetry(MaxSpeed);
-
-    private final CommandXboxController joystick = new CommandXboxController(
-            Constants.OIConstants.kDriverControllerPort);
-    private final CommandXboxController operator = new CommandXboxController(
-            Constants.OIConstants.kOperatorControllerPort);
-
+  // Setting up bindings for necessary control of the swerve drive platform 
+  private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+          .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+          .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+  
+  private final Telemetry logger = new Telemetry(MaxSpeed);
+  */ 
+  private final CommandXboxController joystick = new CommandXboxController(
+          Constants.OIConstants.kDriverControllerPort);
+  private final CommandXboxController operator = new CommandXboxController(
+          Constants.OIConstants.kOperatorControllerPort);
+  private final FloorIntake m_FloorIntake = new FloorIntake();
+  private final Turret m_Turret = new Turret();
+  private final Climber m_Climber = new Climber();
+  /*
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-
+  */
+  private final Command m_intake = m_FloorIntake.run(() -> m_FloorIntake.intake());
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -67,6 +76,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    /* 
     drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() -> drive
@@ -76,16 +86,10 @@ public class RobotContainer {
                 .withVelocityY(-MathUtil.applyDeadband(joystick.getLeftX()/1.50, OIConstants.kDriveDeadband) * MaxSpeed) 
                 // Drive counterclockwise with negative X (left)
                 .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX()/1.05, OIConstants.kDriveDeadband) * MaxAngularRate)
-            ));
+            ));*/
+    operator.leftTrigger().whileTrue(m_intake);
   }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+      return m_autoChooser.getSelected();
   }
 }

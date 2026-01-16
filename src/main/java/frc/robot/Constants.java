@@ -29,11 +29,9 @@ public final class Constants {
       public static final class ManipulatorConstants {
         //Intake Motors - Kraken X60
         public static final int kIntakeMotor = 25;
-        //Claw Wraist Motor - Falcon 500
-        public static final int kIntakeWraistMotor = 24;
-        //Elevator Motor - Falcon 500
-        public static final int kElevatorMotorLeft = 22;
-        public static final int kElevatorMotorRight = 23;
+        //Turret Rotation Motor - Kraken X44
+                        /* CHANGE */
+        public static final int kTurretRotationMotor = 24;
         //Intake feed time
         public static final double kIntakeFeedTime = 3.0;
         //Intake Speed in voltage
