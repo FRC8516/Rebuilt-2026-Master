@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -45,6 +47,9 @@ public class RobotContainer {
   private final FloorIntake m_FloorIntake = new FloorIntake();
   private final Turret m_Turret = new Turret();
   private final Climber m_Climber = new Climber();
+  private final Vision m_FrontVision = new Vision(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
+  private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
+
   /*
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   */
@@ -83,6 +88,10 @@ public class RobotContainer {
     operator.leftTrigger().onTrue(m_intake);
     operator.leftBumper().and(operator.leftTrigger()).onFalse(m_Stop);
     operator.leftBumper().onTrue(m_output);
+  }
+  public void Throttle(){
+    m_FrontVision.toggleThrottle();
+    m_RearVision.toggleThrottle();
   }
   public Command getAutonomousCommand() {
       return m_autoChooser.getSelected();

@@ -61,8 +61,23 @@ public final class Constants {
         public static final String Orange = "Orange";
     }
 
-    public static final class VisionConstants {
-        public static final String LIMELIGHT_NAME = "limelight-front";
+    public static final class kVision {
+        public static final String FrontLimelight = "front";
+            public static final double fForwardOffset = 0.1234;
+            public static final double fSideOffset = 0.1234;
+            public static final double fHeightOffset = 0.1234;
+            public static final double fRollOffset = 0.1234;
+            public static final double fPitchOffset = 0.1234;
+            public static final int fYawOffset = 0;
+        public static final String RearLimelight = "rear";
+            public static final double rForwardOffset = 0.1234;
+            public static final double rSideOffset = 0.1234;
+            public static final double rHeightOffset = 0.1234;
+            public static final double rRollOffset = 0.1234;
+            public static final double rPitchOffset = 0.1234;
+            public static final int rYawOffset = 0;
+        public static final String TurretLimelight = "turret";
+             
     }
 
 }
