@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,6 +16,20 @@ public class Turret extends SubsystemBase {
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
   /** Creates a new TurretSubsytem. */
   public Turret() {
+    TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
+    TalonFXConfiguration firingConfigs = new TalonFXConfiguration();
+    TalonFXConfiguration spinConfigs = new TalonFXConfiguration();
+      //Set configurations  
+      
+      firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+      angleConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+      spinConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
+      spinConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+
+    m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
+    m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
+    m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
 
   }
 

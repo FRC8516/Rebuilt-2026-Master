@@ -27,28 +27,28 @@ public final class Constants {
       public static final class ManipulatorConstants {
         //Intake Motors - Kraken X60
                         /* CHANGE */
-        public static final int kIntakeMotor = null;
+        public static final int kIntakeMotor = 1;
         //Turret Rotation Motor - Kraken X44
                         /* CHANGE */
-        public static final int kTurretRotationMotor = null;
+        public static final int kTurretRotationMotor = 1;
         //Turret Angle Motor - 
                         /* CHANGE */
-        public static final int kTurretAngleMotor = null;
+        public static final int kTurretAngleMotor = 1;
         //Turret Firing Motor - 
                         /* CHANGE */
-        public static final int kTurretFiringMotor = null;
+        public static final int kTurretFiringMotor = 1;
         //Climber Motor - 
                         /* CHANGE */
-        public static final int kClimberMotor = null;
+        public static final int kClimberMotor = 1;
         //Intake Speed in voltage
                         /* CHANGE */
-        public static final double kIntakeVoltage = null;
+        public static final double kIntakeVoltage = 1;
         //Turret Rotation time out
                         /* CHANGE */
-        public static final double kTurretRotationTimeout = null;
+        public static final double kTurretRotationTimeout = 1;
         //Firing time out
                         /* CHANGE */
-        public static final double kShooterWraistTime = null;
+        public static final double kShooterWraistTime = 1;
     }
 
     //Led lights
