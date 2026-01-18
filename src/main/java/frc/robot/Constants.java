@@ -21,27 +21,34 @@ public final class Constants {
         public static final int kDriverControllerPort = 0;
         public static final int kOperatorControllerPort = 1;
         public static final double kDriveDeadband = 0.35;  //@0.05
-        public static final int CANdleID = 27;
-        public static final int CANRangeID = 21;
-        public static final double CANRangeDetectRange = 0.1; //Set to half total distance from the top of coral chute
+        //public static final int CANdleID = 27;
     }
 
       public static final class ManipulatorConstants {
         //Intake Motors - Kraken X60
-        public static final int kIntakeMotor = 25;
+                        /* CHANGE */
+        public static final int kIntakeMotor = null;
         //Turret Rotation Motor - Kraken X44
                         /* CHANGE */
-        public static final int kTurretRotationMotor = 24;
-        //Intake feed time
-        public static final double kIntakeFeedTime = 3.0;
+        public static final int kTurretRotationMotor = null;
+        //Turret Angle Motor - 
+                        /* CHANGE */
+        public static final int kTurretAngleMotor = null;
+        //Turret Firing Motor - 
+                        /* CHANGE */
+        public static final int kTurretFiringMotor = null;
+        //Climber Motor - 
+                        /* CHANGE */
+        public static final int kClimberMotor = null;
         //Intake Speed in voltage
-        public static final double kIntakeVoltage = 6.5;
-        //Position Intake Wraist time out
-        public static final double kIntakeWraistTime = 0.10;
-        //Shooter Wraist time out
-        public static final double kShooterWraistTime = 1.0;
-        //Climber
-        public static final int kClimberMotor = 26;
+                        /* CHANGE */
+        public static final double kIntakeVoltage = null;
+        //Turret Rotation time out
+                        /* CHANGE */
+        public static final double kTurretRotationTimeout = null;
+        //Firing time out
+                        /* CHANGE */
+        public static final double kShooterWraistTime = null;
     }
 
     //Led lights
@@ -53,26 +60,7 @@ public final class Constants {
         public static final String Green = "Green";
         public static final String Orange = "Orange";
     }
-    
-    //Claw Positions 
-    public static final class ClawPositions {
-        public static final String HomePosition = "HomePosition";
-        public static final String ScoringPosition = "ScoringPosition";
-        public static final String TransferPosition = "TransferPostion";
-        public static final String AlgaePosition = "AlgaePositon";
-        public static final String AlgaeScoringPosition = "AlgaeScoringPositon";
-        public static final String LoadingPosition = "LoadingPosition";
-    }
 
-    //Elevator Positions
-    public static final class ElevatorPositions {
-        public static final String HomePosition = "HomePosition";
-        public static final String L1Position = "L1Position";
-        public static final String L2Position = "L2Position";
-        public static final String L3Position = "L3Position";
-        public static final String L4Position = "L4Position";
-        public static final String LoadingPosition = "LoadingPosition";
-    }
     public static final class VisionConstants {
         public static final String LIMELIGHT_NAME = "limelight-front";
     }
