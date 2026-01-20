@@ -21,6 +21,9 @@ public class Vision extends SubsystemBase {
         yaw);
     LimelightHelpers.SetFiducialIDFiltersOverride(limelightName, new int[] {});
   }
+  public Vision(){
+    
+  }
   public void toggleThrottle(){
     if (throttled == false) {
         LimelightHelpers.SetThrottle(m_limelightName, 200);

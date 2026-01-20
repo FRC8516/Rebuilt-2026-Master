@@ -25,7 +25,7 @@ public class Turret extends SubsystemBase {
       angleConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
       spinConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-      spinConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+      spinConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);

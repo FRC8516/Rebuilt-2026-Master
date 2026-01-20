@@ -1,27 +1,24 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ManipulatorConstants;
 
 public class Climber extends SubsystemBase {
+  private TalonFX m_ClimberMotor = new TalonFX(ManipulatorConstants.kClimberMotor);
   /** Creates a new ExampleSubsystem. */
   public Climber() {
-    
+    TalonFXConfiguration config = new TalonFXConfiguration();
+    config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
+    m_ClimberMotor.getConfigurator().apply(config);
   }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public Command exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
-  }
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
