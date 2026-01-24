@@ -13,12 +13,15 @@ public class Climber extends SubsystemBase {
   private TalonFX m_ClimberMotor = new TalonFX(ManipulatorConstants.kClimberMotor);
   /** Creates a new ExampleSubsystem. */
   public Climber() {
+    
     TalonFXConfiguration config = new TalonFXConfiguration();
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
     m_ClimberMotor.getConfigurator().apply(config);
   }
-
+  public TalonFX getMotor(){
+    return m_ClimberMotor;
+  }
 
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).

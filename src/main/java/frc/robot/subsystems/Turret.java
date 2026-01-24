@@ -32,19 +32,14 @@ public class Turret extends SubsystemBase {
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
 
   }
-
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public Command Home() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          
-        });
+  public TalonFX getMotorA(){
+    return m_TurretAngleMotor;
+  }
+  public TalonFX getMotorF(){
+    return m_TurretFiringMotor;
+  }
+  public TalonFX getMotorS(){
+    return m_TurretSpinMotor;
   }
 
   /**

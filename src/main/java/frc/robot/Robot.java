@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private boolean music = true;
   private final RobotContainer m_robotContainer;
 
   /**
@@ -48,14 +48,28 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     m_robotContainer.Throttle();
+    if(music == true){
+      m_robotContainer.m_Orchestra.loadMusic("quirkydog.crp");
+      m_robotContainer.m_Orchestra.play();
+    }
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    if (m_robotContainer.m_Orchestra.isPlaying() == false && music == true){
+      m_robotContainer.m_Orchestra.stop();
+      m_robotContainer.m_Orchestra.play();
+    }
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    // If robot acts up, add m_robotContainer.m_Orchestra.close(); after the stop command
+    if(music == true){
+      m_robotContainer.m_Orchestra.stop();
+    }
+    music = false;
     m_robotContainer.Throttle();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 

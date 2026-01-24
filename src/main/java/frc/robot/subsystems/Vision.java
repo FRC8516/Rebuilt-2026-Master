@@ -21,6 +21,7 @@ public class Vision extends SubsystemBase {
         yaw);
     LimelightHelpers.SetFiducialIDFiltersOverride(limelightName, new int[] {});
   }
+  /*intended for Turret Limelight configuration due to movement*/
   public Vision(){
     
   }
