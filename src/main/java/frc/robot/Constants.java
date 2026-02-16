@@ -40,6 +40,10 @@ public final class Constants {
         //Climber Motor - 
                         /* CHANGE */
         public static final int kClimberMotor = 1;
+        //Turret Feed Motor -
+        public static final int kFeedMotor = 1;
+        //Turret Feed Voltage (-16 thru 16)
+        public static final double kFeedVoltage = 3;
         //Intake Speed in voltage
                         /* CHANGE */
         public static final double kIntakeVoltage = 1;

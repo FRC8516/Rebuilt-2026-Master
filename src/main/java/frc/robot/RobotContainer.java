@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
+import frc.robot.commands.intake;
+import frc.robot.commands.turretAim;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
@@ -51,13 +53,14 @@ public class RobotContainer {
   private final Climber m_Climber = new Climber();
   private final Vision m_FrontVision = new Vision(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
   private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
-
+  private final Vision m_turretVision = new Vision(kVision.TurretLimelight);
+  
   /*
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   */
-  private final Command m_intake = m_FloorIntake.runOnce(() -> m_FloorIntake.intake());
-  private final Command m_output = m_FloorIntake.runOnce(() -> m_FloorIntake.output());
-  private final Command m_Stop = m_FloorIntake.runOnce(() -> m_FloorIntake.stop());
+  private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
+  private final intake m_intake = new intake(m_FloorIntake);
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
@@ -88,14 +91,14 @@ public class RobotContainer {
                 // Drive counterclockwise with negative X (left)
                 .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX()/1.05, OIConstants.kDriveDeadband) * MaxAngularRate)
             ));*/
-    operator.leftTrigger().onTrue(m_intake);
-    operator.leftBumper().and(operator.leftTrigger()).onFalse(m_Stop);
-    operator.leftBumper().onTrue(m_output);
+    operator.leftTrigger().whileTrue(m_intake);
+    operator.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
   }
   public void Throttle(){
     m_FrontVision.toggleThrottle();
     m_RearVision.toggleThrottle();
   }
+
   private void addMotorsToOrchestra(){
     /*
     m_Orchestra.addInstrument(drivetrain.getModule(0).getDriveMotor());
@@ -108,11 +111,11 @@ public class RobotContainer {
     m_Orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
     */
     m_Orchestra.addInstrument(m_Climber.getMotor());
-    m_Orchestra.addInstrument(m_Turret.getMotorA());
+    //m_Orchestra.addInstrument(m_Turret.getMotorA());
     m_Orchestra.addInstrument(m_Turret.getMotorS());
     m_Orchestra.addInstrument(m_Turret.getMotorF());
-    
   }
+
   public Command getAutonomousCommand() {
       return m_autoChooser.getSelected();
   }
