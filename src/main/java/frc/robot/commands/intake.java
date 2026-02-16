@@ -4,19 +4,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FloorIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class intake extends Command {
-  @SuppressWarnings("PMD.UnusedPrivateField")
+  
   private final FloorIntake m_Intake;
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
+ 
   public intake(FloorIntake floorIntake) {
     m_Intake = floorIntake;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -35,7 +30,9 @@ public class intake extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Intake.stop();
+  }
 
   // Returns true when the command should end.
   @Override

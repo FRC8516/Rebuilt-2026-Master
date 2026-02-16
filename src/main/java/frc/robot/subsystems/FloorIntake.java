@@ -13,7 +13,7 @@ import frc.robot.Constants.ManipulatorConstants;
 
 public class FloorIntake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private m_IntakeWrist = new ;
+  
   private SparkFlex m_IntakeMotor = new SparkFlex(ManipulatorConstants.kIntakeMotor,MotorType.kBrushless);
   public FloorIntake() {
     //Need to apply configs to motor, Unknown how much change is needed\
@@ -34,7 +34,7 @@ public class FloorIntake extends SubsystemBase {
   }
   public void stop(){
     m_IntakeMotor.stopMotor();
-    m_IntakeWrist.
+    
   }
 
   @Override

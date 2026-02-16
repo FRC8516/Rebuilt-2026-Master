@@ -7,7 +7,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj2.command.Command;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorConstants;
 
@@ -17,6 +17,7 @@ public class Turret extends SubsystemBase {
    //private final TalonFX m_TurretAngleMotor = new TalonFX(ManipulatorConstants.kTurretAngleMotor);
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
     private SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
+     private SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
@@ -69,9 +70,11 @@ public class Turret extends SubsystemBase {
 
   public void Feed(){
     m_FeedMotor.setVoltage(ManipulatorConstants.kFeedVoltage);
+    m_Agitator.setVoltage(ManipulatorConstants.kAgitatorVoltage);
   }
   public void NoFeed(){
     m_FeedMotor.stopMotor();
+    m_Agitator.stopMotor();
   }
   public void Fire(){
     m_TurretFiringMotor.setVoltage(16);
@@ -85,7 +88,5 @@ public class Turret extends SubsystemBase {
     }else{
       m_TurretSpinMotor.set(Position);
     }
-   
-
   }
 }
