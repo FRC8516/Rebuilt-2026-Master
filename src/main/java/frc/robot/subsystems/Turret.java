@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -17,7 +18,7 @@ public class Turret extends SubsystemBase {
    //private final TalonFX m_TurretAngleMotor = new TalonFX(ManipulatorConstants.kTurretAngleMotor);
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
     private SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
-     private SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
+    private SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
@@ -82,11 +83,7 @@ public class Turret extends SubsystemBase {
   public void CeaseFire(){
     m_TurretFiringMotor.stopMotor();
   }
-  public void setTurretPos(double Position){
-    if (Position == 0){
-
-    }else{
-      m_TurretSpinMotor.set(Position);
-    }
+  public void setTurretPos(ControlRequest Position){
+      m_TurretSpinMotor.setControl(Position);
   }
 }
