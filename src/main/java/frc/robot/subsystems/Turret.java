@@ -5,9 +5,13 @@ import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorConstants;
@@ -18,12 +22,18 @@ public class Turret extends SubsystemBase {
    //private final TalonFX m_TurretAngleMotor = new TalonFX(ManipulatorConstants.kTurretAngleMotor);
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
     private SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
-    private SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
+    private SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kAgitatorMotor,MotorType.kBrushless);
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
     TalonFXConfiguration firingConfigs = new TalonFXConfiguration();
     TalonFXConfiguration spinConfigs = new TalonFXConfiguration();
+    SparkBaseConfig configs = new SparkFlexConfig();
+      //Set configurations  
+      
+    configs.inverted(false);
+    configs.idleMode(IdleMode.kCoast);
+    
       //Set configurations  
       
       firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
@@ -35,7 +45,8 @@ public class Turret extends SubsystemBase {
     //m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
-
+    m_FeedMotor.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    m_Agitator.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
   }
   /*
   public TalonFX getMotorA(){

@@ -27,21 +27,23 @@ public final class Constants {
       public static final class ManipulatorConstants {
         //Intake Motors - Kraken X60
                         /* CHANGE */
-        public static final int kIntakeMotor = 1;
+        public static final int kIntakeMotor = 16;
         //Turret Rotation Motor - Kraken X44
                         /* CHANGE */
-        public static final int kTurretRotationMotor = 1;
+        public static final int kTurretRotationMotor = 12;
         //Turret Angle Motor - 
                         /* CHANGE */
         public static final int kTurretAngleMotor = 1;
         //Turret Firing Motor - 
                         /* CHANGE */
-        public static final int kTurretFiringMotor = 1;
+        public static final int kTurretFiringMotor = 13;
         //Climber Motor - 
                         /* CHANGE */
-        public static final int kClimberMotor = 1;
+        public static final int kClimberMotor = 14;
         //Turret Feed Motor -
-        public static final int kFeedMotor = 1;
+        public static final int kFeedMotor = 15;
+        //Agitator feed motor
+        public static final int kAgitatorMotor = 17;
         //Turret Feed Voltage (-16 thru 16)
         public static final double kFeedVoltage = 3;
         public static final double kAgitatorVoltage = 3;
