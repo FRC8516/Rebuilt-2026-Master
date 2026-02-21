@@ -4,10 +4,18 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
+
 import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,9 +25,12 @@ import frc.robot.Constants.*;
 import frc.robot.commands.intake;
 import frc.robot.commands.turretAim;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.robot.generated.TunerConstants;
+import frc.robot.commands.Test;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -30,7 +41,7 @@ import frc.robot.subsystems.Vision;
 public class RobotContainer {
   public Orchestra m_Orchestra = new Orchestra();
   private final SendableChooser<Command> m_autoChooser;
-  /* 
+  
   private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
   private double MaxAngularRate = RotationsPerSecond.of(0.50).in(RadiansPerSecond); // 1/2 of a rotation per second
                                                                                     // max angular velocity
@@ -43,7 +54,7 @@ public class RobotContainer {
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   
   private final Telemetry logger = new Telemetry(MaxSpeed);
-  */ 
+ 
   private final CommandXboxController joystick = new CommandXboxController(
           Constants.OIConstants.kDriverControllerPort);
   private final CommandXboxController operator = new CommandXboxController(
@@ -54,13 +65,10 @@ public class RobotContainer {
   private final Vision m_FrontVision = new Vision(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
   private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
   private final Vision m_turretVision = new Vision(kVision.TurretLimelight);
-  
-  /*
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-  */
+  public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
   private final intake m_intake = new intake(m_FloorIntake);
-  
+   private final Test test = new Test(m_Turret,m_FloorIntake);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
@@ -80,7 +88,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    /* 
+     
     drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() -> drive
@@ -90,9 +98,12 @@ public class RobotContainer {
                 .withVelocityY(-MathUtil.applyDeadband(joystick.getLeftX()/1.50, OIConstants.kDriveDeadband) * MaxSpeed) 
                 // Drive counterclockwise with negative X (left)
                 .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX()/1.05, OIConstants.kDriveDeadband) * MaxAngularRate)
-            ));*/
-    operator.leftTrigger().whileTrue(m_intake);
-    operator.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
+            ));
+    joystick.leftTrigger().whileTrue(m_intake);
+    joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
+    joystick.a().whileTrue(test);
+     joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
   }
   public void Throttle(){
     m_FrontVision.toggleThrottle();
@@ -100,7 +111,7 @@ public class RobotContainer {
   }
 
   private void addMotorsToOrchestra(){
-    /*
+
     m_Orchestra.addInstrument(drivetrain.getModule(0).getDriveMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(0).getSteerMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(1).getDriveMotor());
@@ -109,7 +120,6 @@ public class RobotContainer {
     m_Orchestra.addInstrument(drivetrain.getModule(2).getSteerMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
-    */
     m_Orchestra.addInstrument(m_Climber.getMotor());
     //m_Orchestra.addInstrument(m_Turret.getMotorA());
     m_Orchestra.addInstrument(m_Turret.getMotorS());

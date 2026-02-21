@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -14,7 +15,7 @@ public class Climber extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   public Climber() {
     
-    TalonFXConfiguration config = new TalonFXConfiguration();
+    TalonFXConfiguration config = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
     m_ClimberMotor.getConfigurator().apply(config);
@@ -32,7 +33,7 @@ public class Climber extends SubsystemBase {
     // Query some boolean state, such as a digital sensor.
     return false;
   }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

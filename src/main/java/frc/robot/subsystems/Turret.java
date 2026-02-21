@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -26,8 +27,8 @@ public class Turret extends SubsystemBase {
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
-    TalonFXConfiguration firingConfigs = new TalonFXConfiguration();
-    TalonFXConfiguration spinConfigs = new TalonFXConfiguration();
+    TalonFXConfiguration firingConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
+    TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
     SparkBaseConfig configs = new SparkFlexConfig();
       //Set configurations  
       
@@ -37,7 +38,8 @@ public class Turret extends SubsystemBase {
       //Set configurations  
       
       firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-      //angleConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+      firingConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+            //angleConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
       spinConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
       spinConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
