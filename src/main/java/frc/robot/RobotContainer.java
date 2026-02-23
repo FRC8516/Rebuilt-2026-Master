@@ -14,6 +14,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -67,14 +68,16 @@ public class RobotContainer {
   private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
   private final Vision m_turretVision = new Vision(kVision.TurretLimelight);
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+  //Commands
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
   private final intake m_intake = new intake(m_FloorIntake);
-   private final Test test = new Test(m_Turret,m_FloorIntake,false);
-   private final Test unstuck = new Test(m_Turret,m_FloorIntake,true);
+  private final Test test = new Test(m_Turret,m_FloorIntake,false);
+  private final Test unstuck = new Test(m_Turret,m_FloorIntake,true);
   private final Climb m_climb = new Climb(m_Climber);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
+    NamedCommands.registerCommand("Climb",m_climb);
     // Configure the trigger bindings
     m_autoChooser = AutoBuilder.buildAutoChooser();
     configureBindings();
