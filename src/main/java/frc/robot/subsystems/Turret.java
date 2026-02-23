@@ -24,8 +24,8 @@ public class Turret extends SubsystemBase {
     private final TalonFX m_TurretSpinMotor = new TalonFX(ManipulatorConstants.kTurretRotationMotor);
    //private final TalonFX m_TurretAngleMotor = new TalonFX(ManipulatorConstants.kTurretAngleMotor);
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
-    private SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
-    private SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kAgitatorMotor,MotorType.kBrushless);
+    private final SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
+    private final SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kAgitatorMotor,MotorType.kBrushless);
       /* Keep a brake request so we can disable the motor */
       private final NeutralOut m_Coast = new NeutralOut();
   /** Creates a new TurretSubsytem. */

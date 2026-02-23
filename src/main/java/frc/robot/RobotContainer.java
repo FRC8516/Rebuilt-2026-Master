@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
 import frc.robot.commands.intake;
+import frc.robot.commands.output;
 import frc.robot.commands.turretAim;
 import frc.robot.commands.autoCommands.ExtendClimber;
 import frc.robot.commands.autoCommands.RetractClimber;
@@ -46,7 +47,7 @@ import frc.robot.commands.Climb;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  public Orchestra m_Orchestra = new Orchestra();
+  public final Orchestra m_Orchestra = new Orchestra();
   private final SendableChooser<Command> m_autoChooser;
   
   private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -76,6 +77,7 @@ public class RobotContainer {
   //Commands
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
   private final intake m_intake = new intake(m_FloorIntake);
+  private final output m_output = new output(m_FloorIntake);
   private final Test test = new Test(m_Turret,m_FloorIntake,false);
   private final Test unstuck = new Test(m_Turret,m_FloorIntake,true);
   private final Climb m_climb = new Climb(m_Climber);
@@ -120,11 +122,12 @@ public class RobotContainer {
                 // Drive counterclockwise with negative X (left)
                 .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX()/1.05, OIConstants.kDriveDeadband) * MaxAngularRate)
             ));
+    joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
     joystick.leftTrigger().whileTrue(m_intake);
+    joystick.leftBumper().whileTrue(m_output);
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
     joystick.a().whileTrue(test);
     joystick.b().whileTrue(unstuck);
-     joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
     joystick.x().whileTrue(m_climb);
 
   }
@@ -134,7 +137,6 @@ public class RobotContainer {
   }
 
   private void addMotorsToOrchestra(){
-
     m_Orchestra.addInstrument(drivetrain.getModule(0).getDriveMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(0).getSteerMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(1).getDriveMotor());
