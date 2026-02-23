@@ -31,6 +31,7 @@ import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import frc.robot.generated.TunerConstants;
 import frc.robot.commands.Test;
+import frc.robot.commands.Climb;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -68,7 +69,9 @@ public class RobotContainer {
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
   private final intake m_intake = new intake(m_FloorIntake);
-   private final Test test = new Test(m_Turret,m_FloorIntake);
+   private final Test test = new Test(m_Turret,m_FloorIntake,false);
+   private final Test unstuck = new Test(m_Turret,m_FloorIntake,true);
+  private final Climb m_climb = new Climb(m_Climber);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
@@ -102,7 +105,9 @@ public class RobotContainer {
     joystick.leftTrigger().whileTrue(m_intake);
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
     joystick.a().whileTrue(test);
+    joystick.b().whileTrue(unstuck);
      joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    joystick.x().whileTrue(m_climb);
 
   }
   public void Throttle(){

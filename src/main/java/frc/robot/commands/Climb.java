@@ -4,47 +4,37 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class Test extends Command {
+public class Climb extends Command {
   
-  private final FloorIntake m_Intake;
-  private final Turret m_Turret;
- private final boolean m_unstuck;
-  public Test(Turret turret, FloorIntake floorIntake, boolean unstuck) {
-    m_Intake = floorIntake;
-    m_Turret = turret;
-    m_unstuck = unstuck;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(floorIntake);
+  private final Climber m_Climber;
+ 
+  public Climb(Climber climber) {
+    m_Climber = climber;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
-    if(m_unstuck){
-      m_Turret.unstuck();
-    }else{
-      //m_Intake.intake();
-      m_Turret.Fire();
-      m_Turret.Feed();  
-    }
+    m_Climber.setPos(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    SmartDashboard.putBoolean("Climber In Pos", m_Climber.inPos());
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Intake.stop();
-    m_Turret.NoFeed();
-    m_Turret.CeaseFire();
+    m_Climber.setPos(false);
   }
   
   // Returns true when the command should end.

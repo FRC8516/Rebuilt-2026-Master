@@ -33,7 +33,7 @@ public class intake extends Command {
   public void end(boolean interrupted) {
     m_Intake.stop();
   }
-  
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
+import com.ctre.phoenix6.controls.NeutralOut;
+import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -24,19 +26,19 @@ public class Turret extends SubsystemBase {
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
     private SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
     private SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kAgitatorMotor,MotorType.kBrushless);
+      /* Keep a brake request so we can disable the motor */
+      private final NeutralOut m_Coast = new NeutralOut();
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
     TalonFXConfiguration firingConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
     TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
     SparkBaseConfig configs = new SparkFlexConfig();
-      //Set configurations  
-      
+    //Set configurations  
     configs.inverted(false);
     configs.idleMode(IdleMode.kCoast);
-    
-      //Set configurations  
-      
+
+      //Set configurations
       firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
       firingConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             //angleConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -91,12 +93,16 @@ public class Turret extends SubsystemBase {
     m_Agitator.stopMotor();
   }
   public void Fire(){
-    m_TurretFiringMotor.setVoltage(16);
+    m_TurretFiringMotor.setControl(new VelocityDutyCycle(5000));
   }
   public void CeaseFire(){
-    m_TurretFiringMotor.stopMotor();
+    m_TurretFiringMotor.setControl(m_Coast);
   }
   public void setTurretPos(ControlRequest Position){
       m_TurretSpinMotor.setControl(Position);
+  }
+  public void unstuck(){
+    m_FeedMotor.setVoltage(-ManipulatorConstants.kFeedVoltage);
+    m_Agitator.setVoltage(-ManipulatorConstants.kAgitatorVoltage);
   }
 }

@@ -40,7 +40,7 @@ public final class Constants {
         //Agitator feed motor
         public static final int kAgitatorMotor = 32;
         //Turret Feed Voltage (-16 thru 16)
-        public static final double kFeedVoltage = -3;
+        public static final double kFeedVoltage = -6;
         public static final double kAgitatorVoltage = 3;
         //Intake Speed in voltage
                         /* CHANGE */
@@ -51,6 +51,10 @@ public final class Constants {
         //Firing time out
                         /* CHANGE */
         public static final double kShooterWraistTime = 1;
+    }
+    public static final class ClimberPos{
+        public static final String Home = "Down";
+        public static final String Climb = "Up";
     }
 
     //Led lights
