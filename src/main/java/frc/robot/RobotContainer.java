@@ -10,7 +10,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 
 import com.ctre.phoenix6.Orchestra;
-import com.ctre.phoenix6.hardware.TalonFX;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -25,6 +25,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
 import frc.robot.commands.intake;
 import frc.robot.commands.turretAim;
+import frc.robot.commands.autoCommands.ExtendClimber;
+import frc.robot.commands.autoCommands.RetractClimber;
+import frc.robot.commands.autoCommands.ReverseIntake;
+import frc.robot.commands.autoCommands.RunIntake;
+import frc.robot.commands.autoCommands.StopIntake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.FloorIntake;
@@ -52,15 +57,15 @@ public class RobotContainer {
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
           .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+  //private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  //private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   
   private final Telemetry logger = new Telemetry(MaxSpeed);
  
   private final CommandXboxController joystick = new CommandXboxController(
           Constants.OIConstants.kDriverControllerPort);
-  private final CommandXboxController operator = new CommandXboxController(
-          Constants.OIConstants.kOperatorControllerPort);
+  //private final CommandXboxController operator = new CommandXboxController(Constants.OIConstants.kOperatorControllerPort);
+  //Subsystems
   private final FloorIntake m_FloorIntake = new FloorIntake();
   private final Turret m_Turret = new Turret();
   private final Climber m_Climber = new Climber();
@@ -74,10 +79,20 @@ public class RobotContainer {
   private final Test test = new Test(m_Turret,m_FloorIntake,false);
   private final Test unstuck = new Test(m_Turret,m_FloorIntake,true);
   private final Climb m_climb = new Climb(m_Climber);
+  //Auto Commands
+  private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);
+  private final RetractClimber m_Retract = new RetractClimber(m_Climber);
+  private final RunIntake m_AutoIntake = new RunIntake(m_FloorIntake);
+  private final StopIntake m_StopIntake = new StopIntake(m_FloorIntake);
+  private final ReverseIntake m_ReverseIntake = new ReverseIntake(m_FloorIntake);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
-    NamedCommands.registerCommand("Climb",m_climb);
+    NamedCommands.registerCommand("Extend Climber",m_Extend);
+    NamedCommands.registerCommand("Retract Climber",m_Retract);
+    NamedCommands.registerCommand("Intake",m_AutoIntake);
+    NamedCommands.registerCommand("StopIntake",m_StopIntake);
+    NamedCommands.registerCommand("Output", m_ReverseIntake);
     // Configure the trigger bindings
     m_autoChooser = AutoBuilder.buildAutoChooser();
     configureBindings();

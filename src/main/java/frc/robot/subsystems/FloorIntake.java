@@ -34,9 +34,10 @@ public class FloorIntake extends SubsystemBase {
   }
   public void stop(){
     m_IntakeMotor.stopMotor();
-    
   }
-
+  public void output(){
+    m_IntakeMotor.setVoltage(-ManipulatorConstants.kIntakeVoltage);
+  }
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
