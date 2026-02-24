@@ -38,6 +38,7 @@ import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import frc.robot.generated.TunerConstants;
 import frc.robot.commands.Test;
+import frc.robot.commands.Unstuck;
 import frc.robot.commands.Climb;
 
 /**
@@ -79,7 +80,7 @@ public class RobotContainer {
   private final intake m_intake = new intake(m_FloorIntake);
   private final output m_output = new output(m_FloorIntake);
   private final Test test = new Test(m_Turret,m_FloorIntake,false);
-  private final Test unstuck = new Test(m_Turret,m_FloorIntake,true);
+  private final Unstuck unstuck = new Unstuck(m_Turret);
   private final Climb m_climb = new Climb(m_Climber);
   //Auto Commands
   private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);

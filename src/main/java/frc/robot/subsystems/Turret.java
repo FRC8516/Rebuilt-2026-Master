@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.AudioConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.PersistMode;
@@ -17,6 +19,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.CalibrationSettings;
 import frc.robot.Constants.ManipulatorConstants;
 
 public class Turret extends SubsystemBase {
@@ -40,12 +43,18 @@ public class Turret extends SubsystemBase {
 
       //Set configurations
       firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-      firingConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+      firingConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             //angleConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
       spinConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
       spinConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
+      Slot0Configs slot0 = firingConfigs.Slot0;
+    slot0.kS = CalibrationSettings.ElevatorCalibrations.kElevatorkS;   // Add 0.25 V output to overcome static friction
+    slot0.kV = CalibrationSettings.ElevatorCalibrations.kElevatorkV;   // A velocity target of 1 rps results in 0.12 V output
+    slot0.kA = CalibrationSettings.ElevatorCalibrations.kElevatorkA;   // An acceleration of 1 rps/s requires 0.01 V output
+    slot0.kP = CalibrationSettings.ElevatorCalibrations.kElevatorkP;   // An error of 1 rps results in 0.11 V output
+    slot0.kI = CalibrationSettings.ElevatorCalibrations.kElevatorkI;   // no output for integrated error
+    slot0.kD = CalibrationSettings.ElevatorCalibrations.kElevatorkD;
     //m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
@@ -93,7 +102,7 @@ public class Turret extends SubsystemBase {
     m_Agitator.stopMotor();
   }
   public void Fire(){
-    m_TurretFiringMotor.setControl(new VelocityDutyCycle(5000));
+    m_TurretFiringMotor.setControl(new VelocityDutyCycle(50).withSlot(0));
   }
   public void CeaseFire(){
     m_TurretFiringMotor.setControl(m_Coast);

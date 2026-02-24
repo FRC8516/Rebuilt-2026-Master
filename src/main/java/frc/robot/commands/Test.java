@@ -26,13 +26,11 @@ public class Test extends Command {
   @Override
   public void initialize() {
     
-    if(m_unstuck){
-      m_Turret.unstuck();
-    }else{
+    
       //m_Intake.intake();
-      m_Turret.Fire();
+      //m_Turret.Fire();
       m_Turret.Feed();  
-    }
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,9 +40,9 @@ public class Test extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Intake.stop();
+    //m_Intake.stop();
     m_Turret.NoFeed();
-    m_Turret.CeaseFire();
+    //m_Turret.CeaseFire();
   }
   
   // Returns true when the command should end.

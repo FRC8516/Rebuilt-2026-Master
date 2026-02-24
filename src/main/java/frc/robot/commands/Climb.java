@@ -20,7 +20,8 @@ public class Climb extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Climber.setPos(true);
+    //m_Climber.setPos(true);
+    m_Climber.testrun();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,7 +33,8 @@ public class Climb extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Climber.setPos(false);
+    //m_Climber.setPos(false);
+    m_Climber.stop();
   }
   
   // Returns true when the command should end.

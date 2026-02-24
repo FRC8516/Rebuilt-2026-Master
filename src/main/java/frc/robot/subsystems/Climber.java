@@ -2,16 +2,21 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.AudioConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.NeutralOut;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.CalibrationSettings;
 import frc.robot.Constants.ClimberPos;
 import frc.robot.Constants.ManipulatorConstants;
 
@@ -27,11 +32,20 @@ public class Climber extends SubsystemBase {
       /* Keep a brake request so we can disable the motor */
       private final NeutralOut m_brake = new NeutralOut();
       private double scale = 360;
+      private final MotionMagicVoltage m_mmReq = new MotionMagicVoltage(0);
 
   public Climber() {
     
     TalonFXConfiguration config = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    Slot0Configs slot0 = config.Slot0;
+    slot0.GravityType = GravityTypeValue.Elevator_Static;
+    slot0.kS = CalibrationSettings.ElevatorCalibrations.kElevatorkS;   // Add 0.25 V output to overcome static friction
+    slot0.kV = CalibrationSettings.ElevatorCalibrations.kElevatorkV;   // A velocity target of 1 rps results in 0.12 V output
+    slot0.kA = CalibrationSettings.ElevatorCalibrations.kElevatorkA;   // An acceleration of 1 rps/s requires 0.01 V output
+    slot0.kP = CalibrationSettings.ElevatorCalibrations.kElevatorkP;   // An error of 1 rps results in 0.11 V output
+    slot0.kI = CalibrationSettings.ElevatorCalibrations.kElevatorkI;   // no output for integrated error
+    slot0.kD = CalibrationSettings.ElevatorCalibrations.kElevatorkD;
 
     m_ClimberMotor.getConfigurator().apply(config);
     m_ClimberMotor.setPosition(0);
@@ -53,7 +67,13 @@ public class Climber extends SubsystemBase {
 	  this.MoveToPosition(setPoint/scale);
   }
   public void MoveToPosition(double pos){
-    m_ClimberMotor.setControl(new PositionVoltage(pos));
+    m_ClimberMotor.setControl(m_mmReq.withPosition(pos).withSlot(0));
+  }
+  public void stop(){
+    m_ClimberMotor.stopMotor();
+  }
+  public void testrun(){
+    m_ClimberMotor.setVoltage(-4);
   }
   public Boolean inPos() {
    double dError = aCurrentPosition.getValueAsDouble() - setPoint;

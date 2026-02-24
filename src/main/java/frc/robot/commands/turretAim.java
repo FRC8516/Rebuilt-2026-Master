@@ -31,13 +31,14 @@ public class turretAim extends Command {
   public void execute() {
     SmartDashboard.putBoolean("Turret Valid Target", m_Vision.getTV());
     m_wantedPos = Math.atan((m_Vision.getTX()/m_Vision.getTA()));
-    m_turret.setTurretPos(m_request.withPosition(Math.atan((m_Vision.getTX()/m_Vision.getTA()))));
+   // m_turret.setTurretPos(m_request.withPosition(Math.atan((m_Vision.getTX()/m_Vision.getTA()))));
+    /*
     if (-0.05 < m_wantedPos && m_wantedPos < 0.05){
       m_turret.Feed();
     }else{
       m_turret.NoFeed();
     }
-    
+    */
   }
 
   // Called once the command ends or is interrupted.
