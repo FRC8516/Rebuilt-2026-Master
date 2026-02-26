@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.HootAutoReplay;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -15,8 +17,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private boolean music = true;
+  private boolean music = false;
   private final RobotContainer m_robotContainer;
+   private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
+        .withTimestampReplay()
+        .withJoystickReplay();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -49,7 +54,8 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     m_robotContainer.Throttle();
     if(music == true){
-      m_robotContainer.m_Orchestra.loadMusic("quirkydog.crp");
+      m_robotContainer.m_Orchestra.loadMusic("Tears MC.crp");
+      System.out.println("loaded");
       m_robotContainer.m_Orchestra.play();
     }
   }
@@ -65,9 +71,11 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_timeAndJoystickReplay.update();
     // If robot acts up, add m_robotContainer.m_Orchestra.close(); after the stop command
     if(music == true){
       m_robotContainer.m_Orchestra.stop();
+        
     }
     music = false;
     m_robotContainer.Throttle();

@@ -26,29 +26,35 @@ public final class Constants {
 
       public static final class ManipulatorConstants {
         //Intake Motors - Kraken X60
-                        /* CHANGE */
-        public static final int kIntakeMotor = 1;
+        public static final int kIntakeMotor = 31;
         //Turret Rotation Motor - Kraken X44
-                        /* CHANGE */
-        public static final int kTurretRotationMotor = 1;
+        public static final int kTurretRotationMotor = 26;
         //Turret Angle Motor - 
-                        /* CHANGE */
         public static final int kTurretAngleMotor = 1;
         //Turret Firing Motor - 
-                        /* CHANGE */
-        public static final int kTurretFiringMotor = 1;
+        public static final int kTurretFiringMotor = 25;
         //Climber Motor - 
-                        /* CHANGE */
-        public static final int kClimberMotor = 1;
+        public static final int kClimberMotor = 22;
+        //Turret Feed Motor -
+        public static final int kFeedMotor = 30;
+        //Agitator feed motor
+        public static final int kAgitatorMotor = 32;
+        //Turret Feed Voltage (-16 thru 16)
+        public static final double kFeedVoltage = -6;
+        public static final double kAgitatorVoltage = 3;
         //Intake Speed in voltage
                         /* CHANGE */
-        public static final double kIntakeVoltage = 1;
+        public static final double kIntakeVoltage = -3;
         //Turret Rotation time out
                         /* CHANGE */
         public static final double kTurretRotationTimeout = 1;
         //Firing time out
                         /* CHANGE */
         public static final double kShooterWraistTime = 1;
+    }
+    public static final class ClimberPos{
+        public static final String Home = "Down";
+        public static final String Climb = "Up";
     }
 
     //Led lights
@@ -76,7 +82,7 @@ public final class Constants {
             public static final double rRollOffset = 0.1234;
             public static final double rPitchOffset = 0.1234;
             public static final int rYawOffset = 0;
-        public static final String TurretLimelight = "turret";
+        public static final String TurretLimelight = "limelight-turret";
              
     }
 

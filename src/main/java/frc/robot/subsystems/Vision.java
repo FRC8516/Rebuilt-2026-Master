@@ -1,14 +1,13 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.kVision;
 import frc.robot.subsystems.LimelightHelpers.RawFiducial;
 
 public class Vision extends SubsystemBase {
   private RawFiducial[] fiducials;
   private String m_limelightName;
   private boolean throttled = false;
-
   public Vision(String limelightName, double forward, double side, double up, double roll, double pitch, double yaw) {
     m_limelightName = limelightName;
     LimelightHelpers.setCameraPose_RobotSpace(
@@ -19,11 +18,12 @@ public class Vision extends SubsystemBase {
         roll,
         pitch,
         yaw);
-    LimelightHelpers.SetFiducialIDFiltersOverride(limelightName, new int[] {});
+    LimelightHelpers.SetFiducialIDFiltersOverride(limelightName, new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32});
   }
   /*intended for Turret Limelight configuration due to movement*/
-  public Vision(){
-    
+  public Vision(String limelightName){
+    m_limelightName = limelightName;
+    SmartDashboard.putBoolean("Turret Valid Target", getTV());
   }
   public void toggleThrottle(){
     if (throttled == false) {
@@ -45,7 +45,6 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     fiducials = LimelightHelpers.getRawFiducials(m_limelightName);
-
   }
   public RawFiducial getClosestFiducial() {
     if (fiducials == null || fiducials.length == 0) {

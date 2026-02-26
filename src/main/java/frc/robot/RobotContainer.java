@@ -4,20 +4,42 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.Orchestra;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.pathplanner.lib.auto.AutoBuilder;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+
+import com.ctre.phoenix6.Orchestra;
+
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
+import frc.robot.commands.intake;
+import frc.robot.commands.output;
+import frc.robot.commands.turretAim;
+import frc.robot.commands.autoCommands.ExtendClimber;
+import frc.robot.commands.autoCommands.RetractClimber;
+import frc.robot.commands.autoCommands.ReverseIntake;
+import frc.robot.commands.autoCommands.RunIntake;
+import frc.robot.commands.autoCommands.StopIntake;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.robot.generated.TunerConstants;
+import frc.robot.commands.Test;
+import frc.robot.commands.Unstuck;
+import frc.robot.commands.Climb;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,9 +48,9 @@ import frc.robot.subsystems.Vision;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  public Orchestra m_Orchestra = new Orchestra();
+  public final Orchestra m_Orchestra = new Orchestra();
   private final SendableChooser<Command> m_autoChooser;
-  /* 
+  
   private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
   private double MaxAngularRate = RotationsPerSecond.of(0.50).in(RadiansPerSecond); // 1/2 of a rotation per second
                                                                                     // max angular velocity
@@ -37,30 +59,45 @@ public class RobotContainer {
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
           .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
           .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+  //private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  //private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   
   private final Telemetry logger = new Telemetry(MaxSpeed);
-  */ 
+ 
   private final CommandXboxController joystick = new CommandXboxController(
           Constants.OIConstants.kDriverControllerPort);
-  private final CommandXboxController operator = new CommandXboxController(
-          Constants.OIConstants.kOperatorControllerPort);
+  //private final CommandXboxController operator = new CommandXboxController(Constants.OIConstants.kOperatorControllerPort);
+  //Subsystems
   private final FloorIntake m_FloorIntake = new FloorIntake();
   private final Turret m_Turret = new Turret();
   private final Climber m_Climber = new Climber();
   private final Vision m_FrontVision = new Vision(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
   private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
+  private final Vision m_turretVision = new Vision(kVision.TurretLimelight);
+  public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+  //Commands
+  private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
+  private final intake m_intake = new intake(m_FloorIntake);
+  private final output m_output = new output(m_FloorIntake);
+  private final Test test = new Test(m_Turret,m_FloorIntake,false);
 
-  /*
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-  */
-  private final Command m_intake = m_FloorIntake.runOnce(() -> m_FloorIntake.intake());
-  private final Command m_output = m_FloorIntake.runOnce(() -> m_FloorIntake.output());
-  private final Command m_Stop = m_FloorIntake.runOnce(() -> m_FloorIntake.stop());
+  private final Unstuck unstuck = new Unstuck(m_Turret);
+  private final Climb m_climb = new Climb(m_Climber,true);
+  private final Climb m_noclimb = new Climb(m_Climber, false);
+  //Auto Commands
+  private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);
+  private final RetractClimber m_Retract = new RetractClimber(m_Climber);
+  private final RunIntake m_AutoIntake = new RunIntake(m_FloorIntake);
+  private final StopIntake m_StopIntake = new StopIntake(m_FloorIntake);
+  private final ReverseIntake m_ReverseIntake = new ReverseIntake(m_FloorIntake);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
+    NamedCommands.registerCommand("Extend Climber",m_Extend);
+    NamedCommands.registerCommand("Retract Climber",m_Retract);
+    NamedCommands.registerCommand("Intake",m_AutoIntake);
+    NamedCommands.registerCommand("StopIntake",m_StopIntake);
+    NamedCommands.registerCommand("Output", m_ReverseIntake);
     // Configure the trigger bindings
     m_autoChooser = AutoBuilder.buildAutoChooser();
     configureBindings();
@@ -77,7 +114,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    /* 
+     
     drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() -> drive
@@ -87,17 +124,22 @@ public class RobotContainer {
                 .withVelocityY(-MathUtil.applyDeadband(joystick.getLeftX()/1.50, OIConstants.kDriveDeadband) * MaxSpeed) 
                 // Drive counterclockwise with negative X (left)
                 .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX()/1.05, OIConstants.kDriveDeadband) * MaxAngularRate)
-            ));*/
-    operator.leftTrigger().onTrue(m_intake);
-    operator.leftBumper().and(operator.leftTrigger()).onFalse(m_Stop);
-    operator.leftBumper().onTrue(m_output);
+            ));
+    joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    joystick.leftTrigger().whileTrue(m_intake);
+    joystick.leftBumper().whileTrue(m_output);
+    joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
+    joystick.a().whileTrue(m_noclimb);
+    joystick.b().whileTrue(unstuck);
+    joystick.x().whileTrue(m_climb);
+
   }
   public void Throttle(){
     m_FrontVision.toggleThrottle();
     m_RearVision.toggleThrottle();
   }
+
   private void addMotorsToOrchestra(){
-    /*
     m_Orchestra.addInstrument(drivetrain.getModule(0).getDriveMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(0).getSteerMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(1).getDriveMotor());
@@ -106,13 +148,12 @@ public class RobotContainer {
     m_Orchestra.addInstrument(drivetrain.getModule(2).getSteerMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
     m_Orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
-    */
     m_Orchestra.addInstrument(m_Climber.getMotor());
-    m_Orchestra.addInstrument(m_Turret.getMotorA());
+    //m_Orchestra.addInstrument(m_Turret.getMotorA());
     m_Orchestra.addInstrument(m_Turret.getMotorS());
     m_Orchestra.addInstrument(m_Turret.getMotorF());
-    
   }
+
   public Command getAutonomousCommand() {
       return m_autoChooser.getSelected();
   }
