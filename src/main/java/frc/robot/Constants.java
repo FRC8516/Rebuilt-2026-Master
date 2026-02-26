@@ -82,7 +82,7 @@ public final class Constants {
             public static final double rRollOffset = 0.1234;
             public static final double rPitchOffset = 0.1234;
             public static final int rYawOffset = 0;
-        public static final String TurretLimelight = "turret";
+        public static final String TurretLimelight = "limelight-turret";
              
     }
 

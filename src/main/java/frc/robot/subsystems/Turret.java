@@ -55,6 +55,10 @@ public class Turret extends SubsystemBase {
     slot0.kP = CalibrationSettings.ElevatorCalibrations.kElevatorkP;   // An error of 1 rps results in 0.11 V output
     slot0.kI = CalibrationSettings.ElevatorCalibrations.kElevatorkI;   // no output for integrated error
     slot0.kD = CalibrationSettings.ElevatorCalibrations.kElevatorkD;
+    Slot0Configs slot0Configs = spinConfigs.Slot0;
+    slot0Configs.kP = 2; // An error of 1 rotation results in 2.4 V output
+    slot0Configs.kI = 0; // no output for integrated error
+    slot0Configs.kD = 0.1; // A velocity of 1 rps results in 0.1 V output
     //m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);

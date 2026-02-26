@@ -75,6 +75,9 @@ public class Climber extends SubsystemBase {
   public void testrun(){
     m_ClimberMotor.setVoltage(-4);
   }
+  public void nontestrun(){
+    m_ClimberMotor.setVoltage(4);
+  }
   public Boolean inPos() {
    double dError = aCurrentPosition.getValueAsDouble() - setPoint;
    //Returns the check to see if the elevator is in position

@@ -80,8 +80,10 @@ public class RobotContainer {
   private final intake m_intake = new intake(m_FloorIntake);
   private final output m_output = new output(m_FloorIntake);
   private final Test test = new Test(m_Turret,m_FloorIntake,false);
+
   private final Unstuck unstuck = new Unstuck(m_Turret);
-  private final Climb m_climb = new Climb(m_Climber);
+  private final Climb m_climb = new Climb(m_Climber,true);
+  private final Climb m_noclimb = new Climb(m_Climber, false);
   //Auto Commands
   private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);
   private final RetractClimber m_Retract = new RetractClimber(m_Climber);
@@ -127,7 +129,7 @@ public class RobotContainer {
     joystick.leftTrigger().whileTrue(m_intake);
     joystick.leftBumper().whileTrue(m_output);
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
-    joystick.a().whileTrue(test);
+    joystick.a().whileTrue(m_noclimb);
     joystick.b().whileTrue(unstuck);
     joystick.x().whileTrue(m_climb);
 

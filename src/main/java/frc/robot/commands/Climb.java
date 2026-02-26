@@ -12,16 +12,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class Climb extends Command {
   
   private final Climber m_Climber;
- 
-  public Climb(Climber climber) {
+  private final boolean m_yes;
+  public Climb(Climber climber, boolean yes) {
     m_Climber = climber;
+    m_yes = yes;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     //m_Climber.setPos(true);
-    m_Climber.testrun();
+    if(m_yes){
+      m_Climber.testrun();
+    }else{
+      m_Climber.nontestrun();
+    }
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
