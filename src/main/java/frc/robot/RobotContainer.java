@@ -38,6 +38,7 @@ import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import frc.robot.generated.TunerConstants;
 import frc.robot.commands.Test;
+import frc.robot.commands.TurretSpinBackup;
 import frc.robot.commands.Unstuck;
 import frc.robot.commands.Climb;
 
@@ -82,6 +83,10 @@ public class RobotContainer {
   private final Test test = new Test(m_Turret,m_FloorIntake,false);
 
   private final Unstuck unstuck = new Unstuck(m_Turret);
+
+  private final TurretSpinBackup m_TurretTurnLeft = new TurretSpinBackup(m_Turret, true);
+  private final TurretSpinBackup m_TurretTurnRight = new TurretSpinBackup(m_Turret, false);
+  
   private final Climb m_climb = new Climb(m_Climber,true);
   private final Climb m_noclimb = new Climb(m_Climber, false);
   //Auto Commands
@@ -132,7 +137,9 @@ public class RobotContainer {
     joystick.a().whileTrue(m_noclimb);
     joystick.b().whileTrue(unstuck);
     joystick.x().whileTrue(m_climb);
-
+    joystick.y().whileTrue(test);
+    joystick.povLeft().whileTrue(m_TurretTurnLeft);
+    joystick.povRight().whileTrue(m_TurretTurnRight);
   }
   public void Throttle(){
     m_FrontVision.toggleThrottle();

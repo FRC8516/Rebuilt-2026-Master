@@ -24,7 +24,7 @@ public class turretAim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //m_turret.Fire();
+    m_turret.Fire();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +33,7 @@ public class turretAim extends Command {
     SmartDashboard.putBoolean("Turret Valid Target", m_Vision.getTV());
     m_wantedPos = Math.atan((m_Vision.getTX()/m_Vision.getTA()));
 
-    m_turret.setTurretPos(m_request.withPosition(Math.atan((m_Vision.getTX()/m_Vision.getTA()))));
+    //m_turret.setTurretPos(m_request.withPosition(Math.atan((m_Vision.getTX()/m_Vision.getTA()))));
     /*
     if (-0.05 < m_wantedPos && m_wantedPos < 0.05){
       m_turret.Feed();
