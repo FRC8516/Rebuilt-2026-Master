@@ -6,10 +6,9 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.NeutralOut;
-import com.ctre.phoenix6.controls.VelocityDutyCycle;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
-import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.PersistMode;
@@ -29,8 +28,7 @@ public class Turret extends SubsystemBase {
     private final TalonFX m_TurretSpinMotor = new TalonFX(ManipulatorConstants.kTurretRotationMotor);
    //private final TalonFX m_TurretAngleMotor = new TalonFX(ManipulatorConstants.kTurretAngleMotor);
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
-    private final SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
-    private final SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kAgitatorMotor,MotorType.kBrushless);
+   
       /* Keep a brake request so we can disable the motor */
       private final NeutralOut m_Coast = new NeutralOut();
   /** Creates a new TurretSubsytem. */
@@ -67,9 +65,7 @@ public class Turret extends SubsystemBase {
     //m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
-    m_FeedMotor.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-    m_Agitator.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
-  }
+    }
   /*
   public TalonFX getMotorA(){
     return m_TurretAngleMotor;
@@ -102,16 +98,9 @@ public class Turret extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  public void Feed(){
-    m_FeedMotor.set(ManipulatorConstants.kFeedVoltage);
-    m_Agitator.set(ManipulatorConstants.kAgitatorVoltage);
-  }
-  public void NoFeed(){
-    m_FeedMotor.stopMotor();
-    m_Agitator.stopMotor();
-  }
+  
   public void Fire(){
-    m_TurretFiringMotor.setControl(new VelocityDutyCycle(200).withSlot(0));
+    m_TurretFiringMotor.setControl(new VelocityTorqueCurrentFOC(200).withSlot(0));
   }
   public void CeaseFire(){
     m_TurretFiringMotor.setControl(m_Coast);
@@ -129,17 +118,8 @@ public class Turret extends SubsystemBase {
   public void stopTurn(){
     m_TurretSpinMotor.stopMotor();
   }
-  public void Agitate(){
-    m_Agitator.set(35);
-  }
-  public void antiAgi(){
-    m_Agitator.set(-35);
-  }
   public double RotPos(){
     return m_TurretSpinMotor.getPosition().getValueAsDouble();
   }
-  public void unstuck(){
-    m_FeedMotor.setVoltage(-ManipulatorConstants.kFeedVoltage);
-    m_Agitator.setVoltage(-ManipulatorConstants.kAgitatorVoltage);
-  }
+  
 }

@@ -1,10 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.util.CircularBuffer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.LimelightHelpers.RawFiducial;
@@ -33,6 +29,7 @@ public class Vision extends SubsystemBase {
   public Vision(String limelightName){
     m_limelightName = limelightName;
     SmartDashboard.putBoolean("Turret Valid Target", getTV());
+    LimelightHelpers.SetFiducialIDFiltersOverride(limelightName, new int[] {10,26});
   }
   public void toggleThrottle(){
     if (throttled == false) {

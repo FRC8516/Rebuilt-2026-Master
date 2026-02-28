@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,9 +14,11 @@ public class intake extends Command {
   
   private final FloorIntake m_Intake;
  private final Turret m_Turret;
-  public intake(FloorIntake floorIntake, Turret turret) {
+ private final FeedAndAgi m_feed;
+  public intake(FloorIntake floorIntake, Turret turret, FeedAndAgi feed) {
     m_Intake = floorIntake;
     m_Turret = turret;
+    m_feed = feed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(floorIntake);
   }
@@ -24,7 +27,7 @@ public class intake extends Command {
   @Override
   public void initialize() {
         m_Intake.intake();
-        m_Turret.Agitate();
+        m_feed.Agitate();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -35,7 +38,7 @@ public class intake extends Command {
   @Override
   public void end(boolean interrupted) {
     m_Intake.stop();
-    m_Turret.NoFeed();
+    m_feed.NoFeed();
   }
 
   // Returns true when the command should end.

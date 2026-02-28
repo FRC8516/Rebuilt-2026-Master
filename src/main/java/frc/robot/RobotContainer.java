@@ -33,6 +33,7 @@ import frc.robot.commands.autoCommands.RunIntake;
 import frc.robot.commands.autoCommands.StopIntake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
@@ -76,13 +77,14 @@ public class RobotContainer {
   //private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
   private final Vision m_turretVision = new Vision(kVision.TurretLimelight);
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+  private final FeedAndAgi m_feedAndAgi = new FeedAndAgi();
   //Commands
-  private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
-  private final intake m_intake = new intake(m_FloorIntake,m_Turret);
-  private final output m_output = new output(m_FloorIntake,m_Turret);
-  private final Test test = new Test(m_Turret,m_FloorIntake,false);
-  private final Test fire = new Test(m_Turret, m_FloorIntake, true);
-  private final Unstuck unstuck = new Unstuck(m_Turret);
+  private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret, m_feedAndAgi);
+  private final intake m_intake = new intake(m_FloorIntake,m_Turret, m_feedAndAgi);
+  private final output m_output = new output(m_FloorIntake,m_Turret, m_feedAndAgi);
+  private final Test test = new Test(m_Turret,m_FloorIntake,m_feedAndAgi, false);
+  private final Test fire = new Test(m_Turret, m_FloorIntake, m_feedAndAgi, true);
+  private final Unstuck unstuck = new Unstuck(m_feedAndAgi);
 
   private final TurretSpinBackup m_TurretTurnLeft = new TurretSpinBackup(m_Turret, true);
   private final TurretSpinBackup m_TurretTurnRight = new TurretSpinBackup(m_Turret, false);

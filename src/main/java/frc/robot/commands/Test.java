@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,24 +15,23 @@ public class Test extends Command {
   private final FloorIntake m_Intake;
   private final Turret m_Turret;
  private final boolean m_unstuck;
-  public Test(Turret turret, FloorIntake floorIntake, boolean unstuck) {
+ private final FeedAndAgi m_feed;
+  public Test(Turret turret, FloorIntake floorIntake, FeedAndAgi feed, boolean unstuck) {
     m_Intake = floorIntake;
     m_Turret = turret;
     m_unstuck = unstuck;
+    m_feed = feed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(floorIntake);
+    addRequirements(floorIntake, turret);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
     if(m_unstuck){
       m_Turret.Fire();
-      
     }else{
-      //m_Intake.intake();
-      m_Turret.Feed();  
+      m_feed.Feed();  
     }
   }
 
@@ -42,12 +42,10 @@ public class Test extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //m_Intake.stop();
     if(m_unstuck){
       m_Turret.CeaseFire();
-      
     }else{
-      m_Turret.NoFeed();
+      m_feed.NoFeed();
     }
       
   }

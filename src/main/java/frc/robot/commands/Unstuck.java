@@ -4,22 +4,22 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.FloorIntake;
-import frc.robot.subsystems.Turret;
+
+import frc.robot.subsystems.FeedAndAgi;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class Unstuck extends Command {
-  private final Turret m_Turret;
+  private final FeedAndAgi m_feed;
  
-  public Unstuck(Turret turret) {
-    m_Turret = turret;
+  public Unstuck(FeedAndAgi feed) {
+    m_feed = feed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Turret.unstuck();
+    m_feed.unstuck();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,8 +30,7 @@ public class Unstuck extends Command {
   @Override
   public void end(boolean interrupted) {
    
-    m_Turret.NoFeed();
-    m_Turret.CeaseFire();
+    m_feed.NoFeed();
   }
   
   // Returns true when the command should end.
