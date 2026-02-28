@@ -41,6 +41,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.commands.Test;
 import frc.robot.commands.TurretSpinBackup;
 import frc.robot.commands.Unstuck;
+import frc.robot.commands.feed;
 import frc.robot.commands.Climb;
 
 /**
@@ -80,10 +81,10 @@ public class RobotContainer {
   private final FeedAndAgi m_feedAndAgi = new FeedAndAgi();
   //Commands
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret, m_feedAndAgi);
-  private final intake m_intake = new intake(m_FloorIntake,m_Turret, m_feedAndAgi);
-  private final output m_output = new output(m_FloorIntake,m_Turret, m_feedAndAgi);
-  private final Test test = new Test(m_Turret,m_FloorIntake,m_feedAndAgi, false);
-  private final Test fire = new Test(m_Turret, m_FloorIntake, m_feedAndAgi, true);
+  private final intake m_intake = new intake(m_FloorIntake, m_feedAndAgi);
+  private final output m_output = new output(m_FloorIntake, m_feedAndAgi);
+  private final feed feed = new feed(m_feedAndAgi);
+  private final Test fire = new Test(m_Turret);
   private final Unstuck unstuck = new Unstuck(m_feedAndAgi);
 
   private final TurretSpinBackup m_TurretTurnLeft = new TurretSpinBackup(m_Turret, true);
@@ -140,7 +141,7 @@ public class RobotContainer {
     joystick.a().whileTrue(m_noclimb);
     joystick.b().whileTrue(fire);
     joystick.x().whileTrue(m_climb);
-    joystick.y().whileTrue(test);
+    joystick.y().whileTrue(feed);
     joystick.povLeft().whileTrue(m_TurretTurnLeft);
     joystick.povRight().whileTrue(m_TurretTurnRight);
   }

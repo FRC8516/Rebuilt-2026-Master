@@ -6,21 +6,19 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
-import frc.robot.subsystems.Turret;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class output extends Command {
   
   private final FloorIntake m_Intake;
-  private final Turret m_Turret;
   private final FeedAndAgi m_feed;
-  public output(FloorIntake floorIntake,Turret turret, FeedAndAgi feed) {
+  public output(FloorIntake floorIntake, FeedAndAgi feed) {
     m_Intake = floorIntake;
-    m_Turret = turret;
     m_feed = feed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(floorIntake,turret,feed);
+    addRequirements(floorIntake,feed);
   }
 
   // Called when the command is initially scheduled.
