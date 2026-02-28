@@ -106,7 +106,7 @@ public class Turret extends SubsystemBase {
     m_Agitator.stopMotor();
   }
   public void Fire(){
-    m_TurretFiringMotor.setControl(new VelocityDutyCycle(50).withSlot(0));
+    m_TurretFiringMotor.setControl(new VelocityDutyCycle(200).withSlot(0));
   }
   public void CeaseFire(){
     m_TurretFiringMotor.setControl(m_Coast);
@@ -124,7 +124,9 @@ public class Turret extends SubsystemBase {
   public void stopTurn(){
     m_TurretSpinMotor.stopMotor();
   }
-
+  public double RotPos(){
+    return m_TurretSpinMotor.getPosition().getValueAsDouble();
+  }
   public void unstuck(){
     m_FeedMotor.setVoltage(-ManipulatorConstants.kFeedVoltage);
     m_Agitator.setVoltage(-ManipulatorConstants.kAgitatorVoltage);

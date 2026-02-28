@@ -131,11 +131,12 @@ public class RobotContainer {
                 .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX()/1.05, OIConstants.kDriveDeadband) * MaxAngularRate)
             ));
     joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    joystick.back().whileTrue(unstuck);
     joystick.leftTrigger().whileTrue(m_intake);
     joystick.leftBumper().whileTrue(m_output);
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
     joystick.a().whileTrue(m_noclimb);
-    joystick.b().whileTrue(unstuck);
+    //joystick.b().whileTrue();
     joystick.x().whileTrue(m_climb);
     joystick.y().whileTrue(test);
     joystick.povLeft().whileTrue(m_TurretTurnLeft);

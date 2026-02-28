@@ -25,14 +25,14 @@ public class turretAim extends Command {
   @Override
   public void initialize() {
     m_turret.Fire();
+    m_turret.setTurretPos(m_request.withPosition(m_turret.RotPos()));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     SmartDashboard.putBoolean("Turret Valid Target", m_Vision.getTV());
-    m_wantedPos = Math.atan((m_Vision.getTX()/m_Vision.getTA()));
-
+    m_wantedPos = (m_wantedPos+Math.atan((m_Vision.getTX()/m_Vision.getTA())))/2;
     //m_turret.setTurretPos(m_request.withPosition(Math.atan((m_Vision.getTX()/m_Vision.getTA()))));
     /*
     if (-0.05 < m_wantedPos && m_wantedPos < 0.05){
