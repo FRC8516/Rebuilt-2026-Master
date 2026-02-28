@@ -5,15 +5,17 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.FloorIntake;
+import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class output extends Command {
   
   private final FloorIntake m_Intake;
- 
-  public output(FloorIntake floorIntake) {
+  private final Turret m_Turret;
+  public output(FloorIntake floorIntake,Turret turret) {
     m_Intake = floorIntake;
+    m_Turret = turret;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(floorIntake);
   }
@@ -22,6 +24,7 @@ public class output extends Command {
   @Override
   public void initialize() {
     m_Intake.output();
+    m_Turret.antiAgi();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,6 +35,7 @@ public class output extends Command {
   @Override
   public void end(boolean interrupted) {
     m_Intake.stop();
+    m_Turret.NoFeed();
   }
 
   // Returns true when the command should end.

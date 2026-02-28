@@ -40,8 +40,8 @@ public final class Constants {
         //Agitator feed motor
         public static final int kAgitatorMotor = 32;
         //Turret Feed Voltage (-16 thru 16)
-        public static final double kFeedVoltage = -6;
-        public static final double kAgitatorVoltage = 3;
+        public static final double kFeedVoltage = -15;
+        public static final double kAgitatorVoltage = 15;
         //Intake Speed in voltage
                         /* CHANGE */
         public static final double kIntakeVoltage = -3;

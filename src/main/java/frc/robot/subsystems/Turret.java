@@ -1,12 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.AudioConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -35,7 +37,7 @@ public class Turret extends SubsystemBase {
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
     TalonFXConfiguration firingConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
-    TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
+    TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true)).withFeedback(new FeedbackConfigs().withRemoteCANcoder(new CoreCANcoder(29)));
     SparkBaseConfig configs = new SparkFlexConfig();
     //Set configurations  
     configs.inverted(false);
@@ -46,7 +48,10 @@ public class Turret extends SubsystemBase {
       firingConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             //angleConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
       spinConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-
+      spinConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+      spinConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -0;
+      spinConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+      spinConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 3;
       spinConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
       Slot0Configs slot0 = firingConfigs.Slot0;
     slot0.kS = CalibrationSettings.ElevatorCalibrations.kElevatorkS;   // Add 0.25 V output to overcome static friction
@@ -56,7 +61,7 @@ public class Turret extends SubsystemBase {
     slot0.kI = CalibrationSettings.ElevatorCalibrations.kElevatorkI;   // no output for integrated error
     slot0.kD = CalibrationSettings.ElevatorCalibrations.kElevatorkD;
     Slot0Configs slot0Configs = spinConfigs.Slot0;
-    slot0Configs.kP = 2; // An error of 1 rotation results in 2 V output
+    slot0Configs.kP = 3.5; // An error of 1 rotation results in 2 V output
     slot0Configs.kI = 0; // no output for integrated error
     slot0Configs.kD = 0.1; // A velocity of 1 rps results in 0.1 V output
     //m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
@@ -98,8 +103,8 @@ public class Turret extends SubsystemBase {
   }
 
   public void Feed(){
-    m_FeedMotor.setVoltage(ManipulatorConstants.kFeedVoltage);
-    m_Agitator.setVoltage(ManipulatorConstants.kAgitatorVoltage);
+    m_FeedMotor.set(ManipulatorConstants.kFeedVoltage);
+    m_Agitator.set(ManipulatorConstants.kAgitatorVoltage);
   }
   public void NoFeed(){
     m_FeedMotor.stopMotor();
@@ -123,6 +128,12 @@ public class Turret extends SubsystemBase {
   }
   public void stopTurn(){
     m_TurretSpinMotor.stopMotor();
+  }
+  public void Agitate(){
+    m_Agitator.set(35);
+  }
+  public void antiAgi(){
+    m_Agitator.set(-35);
   }
   public double RotPos(){
     return m_TurretSpinMotor.getPosition().getValueAsDouble();

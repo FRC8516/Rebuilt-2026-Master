@@ -1,5 +1,10 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.util.CircularBuffer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.LimelightHelpers.RawFiducial;
@@ -8,6 +13,10 @@ public class Vision extends SubsystemBase {
   private RawFiducial[] fiducials;
   private String m_limelightName;
   private boolean throttled = false;
+  private CircularBuffer<Double> TAbuffer = new CircularBuffer<Double>(12);
+  private CircularBuffer<Double> TXbuffer = new CircularBuffer<Double>(12);
+  private double avgTX;
+  private double avgTA;
   public Vision(String limelightName, double forward, double side, double up, double roll, double pitch, double yaw) {
     m_limelightName = limelightName;
     LimelightHelpers.setCameraPose_RobotSpace(
@@ -45,6 +54,9 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     fiducials = LimelightHelpers.getRawFiducials(m_limelightName);
+    TXbuffer.addFirst(getTX());
+    TAbuffer.addFirst(getTA());
+    
   }
   public RawFiducial getClosestFiducial() {
     if (fiducials == null || fiducials.length == 0) {
@@ -102,7 +114,20 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
   public boolean getTV(){
     return LimelightHelpers.getTV(m_limelightName);
   }
-
+  public double getAvgTX(){
+    avgTX = 0;
+    for(int i=0;i<TXbuffer.size();i++){
+      avgTX = avgTX+TXbuffer.get(i);
+    }
+    return avgTX/12;
+  }
+  public double getAvgTA(){
+    avgTA = 0;
+    for(int i=0;i<TAbuffer.size();i++){
+      avgTA = avgTA+TAbuffer.get(i);
+    }
+    return avgTA/12;
+  }
   public double getClosestTX(){
     return getClosestFiducial().txnc;
   }

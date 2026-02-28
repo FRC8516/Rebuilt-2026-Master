@@ -73,10 +73,10 @@ public class Climber extends SubsystemBase {
     m_ClimberMotor.stopMotor();
   }
   public void testrun(){
-    m_ClimberMotor.setVoltage(-4);
+    m_ClimberMotor.setVoltage(-6);
   }
   public void nontestrun(){
-    m_ClimberMotor.setVoltage(4);
+    m_ClimberMotor.setVoltage(6);
   }
   public Boolean inPos() {
    double dError = aCurrentPosition.getValueAsDouble() - setPoint;
@@ -99,7 +99,7 @@ public class Climber extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-   private double getPreferencesDouble(String key, double backup) {
+  private double getPreferencesDouble(String key, double backup) {
       if (!Preferences.containsKey(key)) {
         Preferences.initDouble(key, backup);
         Preferences.setDouble(key, backup);

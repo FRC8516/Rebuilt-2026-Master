@@ -72,16 +72,16 @@ public class RobotContainer {
   private final FloorIntake m_FloorIntake = new FloorIntake();
   private final Turret m_Turret = new Turret();
   private final Climber m_Climber = new Climber();
-  private final Vision m_FrontVision = new Vision(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
-  private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
+  //private final Vision m_FrontVision = new Vision(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
+  //private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
   private final Vision m_turretVision = new Vision(kVision.TurretLimelight);
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   //Commands
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret);
-  private final intake m_intake = new intake(m_FloorIntake);
-  private final output m_output = new output(m_FloorIntake);
+  private final intake m_intake = new intake(m_FloorIntake,m_Turret);
+  private final output m_output = new output(m_FloorIntake,m_Turret);
   private final Test test = new Test(m_Turret,m_FloorIntake,false);
-
+  private final Test fire = new Test(m_Turret, m_FloorIntake, true);
   private final Unstuck unstuck = new Unstuck(m_Turret);
 
   private final TurretSpinBackup m_TurretTurnLeft = new TurretSpinBackup(m_Turret, true);
@@ -136,15 +136,15 @@ public class RobotContainer {
     joystick.leftBumper().whileTrue(m_output);
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
     joystick.a().whileTrue(m_noclimb);
-    //joystick.b().whileTrue();
+    joystick.b().whileTrue(fire);
     joystick.x().whileTrue(m_climb);
     joystick.y().whileTrue(test);
     joystick.povLeft().whileTrue(m_TurretTurnLeft);
     joystick.povRight().whileTrue(m_TurretTurnRight);
   }
   public void Throttle(){
-    m_FrontVision.toggleThrottle();
-    m_RearVision.toggleThrottle();
+    //m_FrontVision.toggleThrottle();
+    //m_RearVision.toggleThrottle();
   }
 
   private void addMotorsToOrchestra(){
