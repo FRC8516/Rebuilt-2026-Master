@@ -39,6 +39,8 @@ public final class Constants {
         public static final int kFeedMotor = 30;
         //Agitator feed motor
         public static final int kAgitatorMotor = 32;
+        // Smaller feed motor wheel
+        public static final int kAltFeedMotor = 34;
         //Turret Feed Voltage (-16 thru 16)
         public static final double kFeedVoltage = -15;
         public static final double kAgitatorVoltage = 15;
