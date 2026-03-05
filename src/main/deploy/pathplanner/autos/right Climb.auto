@@ -5,22 +5,21 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right Home to Right climb"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Extend Climber"
-                }
-              }
-            ]
+            "pathName": "Right Home to Right climb"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Extend Climber"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {

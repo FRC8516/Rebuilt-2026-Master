@@ -15,6 +15,7 @@ public class RetractClimber extends Command {
  
   public RetractClimber(Climber climber) {
     m_Climber = climber;
+    addRequirements(climber);
   }
  
   // Called when the command is initially scheduled.

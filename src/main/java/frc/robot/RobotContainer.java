@@ -45,6 +45,7 @@ import frc.robot.commands.TurretSpinBackup;
 import frc.robot.commands.Unstuck;
 import frc.robot.commands.feed;
 import frc.robot.commands.Climb;
+import frc.robot.commands.FixClimber;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -93,7 +94,8 @@ public class RobotContainer {
   private final TurretSpinBackup m_TurretTurnRight = new TurretSpinBackup(m_Turret, false);
   
   private final Climb m_climb = new Climb(m_Climber,true);
-  private final Climb m_noclimb = new Climb(m_Climber, false);
+  private final FixClimber m_FixClimberDown = new FixClimber(m_Climber, false);
+  private final FixClimber m_FixClimberUp = new FixClimber(m_Climber, true);
   //Auto Commands
   private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);
   private final RetractClimber m_Retract = new RetractClimber(m_Climber);
@@ -104,11 +106,11 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
-    NamedCommands.registerCommand("Extend Climber",m_Extend);
-    NamedCommands.registerCommand("Retract Climber",m_Retract);
-    NamedCommands.registerCommand("Intake",m_AutoIntake);
-    NamedCommands.registerCommand("StopIntake",m_StopIntake);
-    NamedCommands.registerCommand("Output", m_ReverseIntake);
+    NamedCommands.registerCommand("Extend Climber",m_Extend.asProxy());
+    NamedCommands.registerCommand("Retract Climber",m_Retract.asProxy());
+    NamedCommands.registerCommand("Intake",m_AutoIntake.asProxy());
+    NamedCommands.registerCommand("StopIntake",m_StopIntake.asProxy());
+    NamedCommands.registerCommand("Output", m_ReverseIntake.asProxy());
     // Configure the trigger bindings
     m_autoChooser = AutoBuilder.buildAutoChooser();
     configureBindings();
@@ -143,10 +145,12 @@ public class RobotContainer {
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
     //joystick.a().whileTrue(m_noclimb);
     joystick.b().whileTrue(fire);
-    joystick.x().whileTrue(m_climb);
+    joystick.x().toggleOnTrue(m_climb);
     joystick.y().whileTrue(feed);
     joystick.povLeft().whileTrue(m_TurretTurnLeft);
     joystick.povRight().whileTrue(m_TurretTurnRight);
+    joystick.povDown().whileTrue(m_FixClimberUp);
+    joystick.povUp().whileTrue(m_FixClimberDown);
   }
   public void Throttle(){
     //m_FrontVision.toggleThrottle();

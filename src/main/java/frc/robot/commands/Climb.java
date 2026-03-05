@@ -21,14 +21,12 @@ public class Climb extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Climber.setPos(true);
-    /* 
-    if(m_yes){
-      m_Climber.testrun();
-    }else{
-      m_Climber.nontestrun();
-    }
-    */
+    m_Climber.setPos(true); 
+    // if(m_yes){
+    //   m_Climber.testrun();
+    // }else{
+    //   m_Climber.nontestrun();
+    // }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
