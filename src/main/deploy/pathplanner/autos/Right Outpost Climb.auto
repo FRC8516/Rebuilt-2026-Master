@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left home to climb"
+                  "pathName": "Right home to Outpost"
                 }
               },
               {
@@ -24,9 +24,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Output"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "left climb to climbed"
+            "pathName": "Outpost to Right Climb"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right climb to climbed"
           }
         },
         {
@@ -39,6 +51,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Left",
+  "folder": "Right",
   "choreoAuto": false
 }

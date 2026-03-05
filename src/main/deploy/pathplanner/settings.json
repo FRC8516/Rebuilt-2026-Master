@@ -7,13 +7,17 @@
     "Left",
     "Middle"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Right",
+    "Middle",
+    "Left"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "defaultNominalVoltage": 12.0,
-  "robotMass": 74.088,
+  "robotMass": 86.0,
   "robotMOI": 6.883,
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.048,
@@ -33,6 +37,7 @@
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
   "robotFeatures": [
-    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":-0.025,\"y\":-0.229},\"size\":{\"width\":0.105,\"length\":0.064},\"borderRadius\":0.025,\"strokeWidth\":0.02,\"filled\":false}}"
+    "{\"name\":\"Climber\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":-0.025,\"y\":-0.229},\"size\":{\"width\":0.105,\"length\":0.064},\"borderRadius\":0.025,\"strokeWidth\":0.02,\"filled\":false}}",
+    "{\"name\":\"Intake\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.4,\"y\":0.0},\"size\":{\"width\":0.38,\"length\":0.051},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}"
   ]
 }

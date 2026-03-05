@@ -20,6 +20,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
@@ -95,9 +97,10 @@ public class RobotContainer {
   //Auto Commands
   private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);
   private final RetractClimber m_Retract = new RetractClimber(m_Climber);
-  private final RunIntake m_AutoIntake = new RunIntake(m_FloorIntake);
-  private final StopIntake m_StopIntake = new StopIntake(m_FloorIntake);
-  private final ReverseIntake m_ReverseIntake = new ReverseIntake(m_FloorIntake);
+  private final RunIntake m_AutoIntake = new RunIntake(m_FloorIntake,m_feedAndAgi);
+  private final StopIntake m_StopIntake = new StopIntake(m_FloorIntake,m_feedAndAgi);
+  private final ReverseIntake m_ReverseIntake = new ReverseIntake(m_FloorIntake,m_feedAndAgi);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     addMotorsToOrchestra();
@@ -138,7 +141,7 @@ public class RobotContainer {
     joystick.leftTrigger().whileTrue(m_intake);
     joystick.leftBumper().whileTrue(m_output);
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
-    joystick.a().whileTrue(m_noclimb);
+    //joystick.a().whileTrue(m_noclimb);
     joystick.b().whileTrue(fire);
     joystick.x().whileTrue(m_climb);
     joystick.y().whileTrue(feed);

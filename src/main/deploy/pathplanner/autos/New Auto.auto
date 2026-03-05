@@ -11,34 +11,22 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left home to climb"
+                  "pathName": "middle Home to Fire"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Extend Climber"
+                  "name": null
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "left climb to climbed"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Retract Climber"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Left",
+  "folder": "Middle",
   "choreoAuto": false
 }

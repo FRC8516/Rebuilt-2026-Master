@@ -42,7 +42,7 @@ public final class Constants {
         // Smaller feed motor wheel
         public static final int kAltFeedMotor = 34;
         //Turret Feed Voltage (-16 thru 16)
-        public static final double kFeedVoltage = -15;
+        public static final double kFeedVoltage = -5;
         public static final double kAgitatorVoltage = 15;
         //Intake Speed in voltage
                         /* CHANGE */
