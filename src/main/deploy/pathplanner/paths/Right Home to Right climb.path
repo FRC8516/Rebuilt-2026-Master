@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5195833333333333,
-        "y": 0.47699561403508706
+        "x": 3.522505290866712,
+        "y": 0.4585120384657466
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.5866337719298245,
-        "y": 0.4481469298245606
+        "x": 0.589555729463203,
+        "y": 0.4296633542552202
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right Home"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Before climb"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Right",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

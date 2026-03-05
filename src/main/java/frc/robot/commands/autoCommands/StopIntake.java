@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autoCommands;
 
+import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -11,9 +12,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class StopIntake extends Command {
   
   private final FloorIntake m_Intake;
- 
-  public StopIntake(FloorIntake floorIntake) {
+  private final FeedAndAgi m_Agitator;
+  public StopIntake(FloorIntake floorIntake, FeedAndAgi agi) {
     m_Intake = floorIntake;
+    m_Agitator = agi;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(floorIntake);
   }
@@ -22,6 +24,7 @@ public class StopIntake extends Command {
   @Override
   public void initialize() {
     m_Intake.stop();
+    m_Agitator.NoFeed();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

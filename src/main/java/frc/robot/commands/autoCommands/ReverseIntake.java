@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autoCommands;
 
+import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -11,17 +12,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class ReverseIntake extends Command {
   
   private final FloorIntake m_Intake;
- 
-  public ReverseIntake(FloorIntake floorIntake) {
+  private final FeedAndAgi m_Agitator;
+  public ReverseIntake(FloorIntake floorIntake, FeedAndAgi agi) {
     m_Intake = floorIntake;
+    m_Agitator = agi;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(floorIntake);
+    addRequirements(floorIntake,agi);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_Intake.output();
+    m_Agitator.antiAgi();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
