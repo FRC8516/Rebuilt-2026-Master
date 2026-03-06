@@ -79,7 +79,7 @@ public class Climber extends SubsystemBase {
   public Boolean inPos() {
    double dError = aCurrentPosition.getValueAsDouble() - setPoint;
    //Returns the check to see if the elevator is in position
-   if ((dError < 0.005) || (dError > -0.005)) {
+   if ((dError < 0.05) || (dError > -0.05)) {
      return true;
    } else {
      return false;

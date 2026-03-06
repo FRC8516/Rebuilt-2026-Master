@@ -150,6 +150,7 @@ public class RobotContainer {
     joystick.povRight().whileTrue(m_TurretTurnRight);
     joystick.povDown().whileTrue(m_FixClimberUp);
     joystick.povUp().whileTrue(m_FixClimberDown);
+    drivetrain.registerTelemetry(logger::telemeterize);
   }
   public void Throttle(){
     //m_FrontVision.toggleThrottle();

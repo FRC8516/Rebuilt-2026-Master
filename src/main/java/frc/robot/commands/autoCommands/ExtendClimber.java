@@ -27,7 +27,9 @@ public class ExtendClimber extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    end(false);
+    if (this.isFinished()){
+      this.end(false);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -37,7 +39,7 @@ public class ExtendClimber extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_Climber.inPos();
   }
 }
 
