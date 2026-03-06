@@ -35,6 +35,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
+import frc.robot.subsystems.PoseEstimation;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 import frc.robot.generated.TunerConstants;
@@ -75,7 +76,7 @@ public class RobotContainer {
   private final FloorIntake m_FloorIntake = new FloorIntake();
   private final Turret m_Turret = new Turret();
   private final Climber m_Climber = new Climber();
-  //private final Vision m_FrontVision = new Vision(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
+  private final PoseEstimation m_FrontVision = new PoseEstimation(kVision.FrontLimelight, kVision.fForwardOffset, kVision.fSideOffset, kVision.fHeightOffset, kVision.fRollOffset, kVision.fPitchOffset, kVision.fYawOffset);
   //private final Vision m_RearVision = new Vision(kVision.RearLimelight, kVision.rForwardOffset, kVision.rSideOffset, kVision.rHeightOffset, kVision.rRollOffset, kVision.rPitchOffset, kVision.rYawOffset);
   private final Vision m_turretVision = new Vision(kVision.TurretLimelight);
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
@@ -131,9 +132,9 @@ public class RobotContainer {
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() -> drive
                 // Drive forward with negative Y (forward)
-                .withVelocityX(-MathUtil.applyDeadband(joystick.getLeftY()/1.50, OIConstants.kDriveDeadband) * MaxSpeed)
+                .withVelocityX(-MathUtil.applyDeadband(joystick.getLeftY()/1.25, OIConstants.kDriveDeadband) * MaxSpeed)
                 // Drive left with negative X (left)
-                .withVelocityY(-MathUtil.applyDeadband(joystick.getLeftX()/1.50, OIConstants.kDriveDeadband) * MaxSpeed) 
+                .withVelocityY(-MathUtil.applyDeadband(joystick.getLeftX()/1.25, OIConstants.kDriveDeadband) * MaxSpeed) 
                 // Drive counterclockwise with negative X (left)
                 .withRotationalRate(-MathUtil.applyDeadband(joystick.getRightX()/1.05, OIConstants.kDriveDeadband) * MaxAngularRate)
             ));
