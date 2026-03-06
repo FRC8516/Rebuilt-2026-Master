@@ -4,10 +4,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.NeutralOut;
-import com.ctre.phoenix6.controls.PositionDutyCycle;
-import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
@@ -32,7 +29,7 @@ public class Climber extends SubsystemBase {
       private String Key;
       /* Keep a brake request so we can disable the motor */
       private final NeutralOut m_brake = new NeutralOut();
-      private double scale = 360;
+      //private double scale = 360;
       private final PositionVoltage m_mmReq = new PositionVoltage(0).withSlot(0);
 
   public Climber() {

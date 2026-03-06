@@ -11,13 +11,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.PersistMode;
-import com.revrobotics.ResetMode;
-import com.revrobotics.spark.SparkFlex;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.CalibrationSettings;
@@ -36,10 +29,6 @@ public class Turret extends SubsystemBase {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
     TalonFXConfiguration firingConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
     TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true)).withFeedback(new FeedbackConfigs().withRemoteCANcoder(new CoreCANcoder(29)));
-    SparkBaseConfig configs = new SparkFlexConfig();
-    //Set configurations  
-    configs.inverted(false);
-    configs.idleMode(IdleMode.kCoast);
 
       //Set configurations
       firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;

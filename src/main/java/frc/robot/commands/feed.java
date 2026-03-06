@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 /** An example command that uses an example subsystem. */
 public class feed extends Command {
   private final FeedAndAgi m_feed;
-  private boolean bfeed;
   public feed(FeedAndAgi feed) {
     m_feed = feed;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,15 +24,7 @@ public class feed extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    // if(bfeed){
-    //   bfeed = false;
-    //   m_feed.NoFeed();
-    // }else{
-    //   bfeed=true;
-    //   m_feed.Feed();
-    // }
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
