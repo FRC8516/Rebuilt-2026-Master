@@ -31,7 +31,6 @@ import frc.robot.commands.autoCommands.RetractClimber;
 import frc.robot.commands.autoCommands.ReverseIntake;
 import frc.robot.commands.autoCommands.RunIntake;
 import frc.robot.commands.autoCommands.StopIntake;
-import frc.robot.commands.autoCommands.autoclimb;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.FeedAndAgi;
@@ -96,8 +95,9 @@ public class RobotContainer {
   private final FixClimber m_FixClimberDown = new FixClimber(m_Climber, false);
   private final FixClimber m_FixClimberUp = new FixClimber(m_Climber, true);
   //Auto Commands
-  private final autoclimb m_Extend = new autoclimb(m_Climber, true);
-  private final autoclimb   m_Retract = new autoclimb(m_Climber, false);
+  
+  private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);
+  private final RetractClimber   m_Retract = new RetractClimber(m_Climber);
   private final RunIntake m_AutoIntake = new RunIntake(m_FloorIntake,m_feedAndAgi);
   private final StopIntake m_StopIntake = new StopIntake(m_FloorIntake,m_feedAndAgi);
   private final ReverseIntake m_ReverseIntake = new ReverseIntake(m_FloorIntake,m_feedAndAgi);
