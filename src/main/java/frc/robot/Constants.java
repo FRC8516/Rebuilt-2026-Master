@@ -70,14 +70,15 @@ public final class Constants {
     }
 
     public static final class kVision {
-        public static final String FrontLimelight = "front";
-            public static final double fForwardOffset = 0.1234;
-            public static final double fSideOffset = 0.1234;
-            public static final double fHeightOffset = 0.1234;
-            public static final double fRollOffset = 0.1234;
-            public static final double fPitchOffset = 0.1234;
-            public static final int fYawOffset = 0;
+        public static final String FrontLimelight = "limelight-front";
+            public static final double fForwardOffset = 0.31;
+            public static final double fSideOffset = 0.27;
+            public static final double fHeightOffset = 0.2794;
+            public static final double fRollOffset = 0;
+            public static final double fPitchOffset = 0;
+            public static final double fYawOffset = -2.6;
         public static final String RearLimelight = "rear";
+
             public static final double rForwardOffset = 0.1234;
             public static final double rSideOffset = 0.1234;
             public static final double rHeightOffset = 0.1234;

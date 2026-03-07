@@ -22,6 +22,7 @@ public class FloorIntake extends SubsystemBase {
       
     configs.inverted(false);
     configs.idleMode(IdleMode.kBrake);
+    configs.smartCurrentLimit(75);
     m_IntakeMotor.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
   }
 

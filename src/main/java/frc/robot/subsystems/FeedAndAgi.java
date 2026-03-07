@@ -26,6 +26,7 @@ public class FeedAndAgi extends SubsystemBase {
     //Set configurations  
     configs.inverted(false);
     configs.idleMode(IdleMode.kCoast);
+    configs.smartCurrentLimit(80);
     m_Agitator.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     m_FeedMotor.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
   }
