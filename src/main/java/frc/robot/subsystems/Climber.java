@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.AudioConfigs;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.NeutralOut;
@@ -34,11 +35,12 @@ public class Climber extends SubsystemBase {
 
   public Climber() {
     
-    TalonFXConfiguration config = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
+    TalonFXConfiguration config = new TalonFXConfiguration().withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimitEnable(true));
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
     config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
     config.Feedback.SensorToMechanismRatio = 100;
+    config.CurrentLimits.StatorCurrentLimit = 90;
     Slot0Configs slot0 = config.Slot0;
     slot0.GravityType = GravityTypeValue.Elevator_Static;
     slot0.kP = CalibrationSettings.ElevatorCalibrations.kElevatorkP;   // An error of 1 rps results in 0.11 V output

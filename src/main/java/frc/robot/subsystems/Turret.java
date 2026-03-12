@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -40,6 +41,7 @@ public class Turret extends SubsystemBase {
       spinConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
       spinConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 3;
       spinConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+      spinConfigs.withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(75));
       Slot0Configs slot0 = firingConfigs.Slot0;
     slot0.kS = CalibrationSettings.ElevatorCalibrations.kElevatorkS;   // Add 0.25 V output to overcome static friction
     slot0.kV = CalibrationSettings.ElevatorCalibrations.kElevatorkV;   // A velocity target of 1 rps results in 0.12 V output
