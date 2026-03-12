@@ -10,7 +10,6 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 
 import com.ctre.phoenix6.Orchestra;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -127,7 +126,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-     
     drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() -> drive
@@ -146,6 +144,7 @@ public class RobotContainer {
     //joystick.a().whileTrue(m_noclimb);
     joystick.b().whileTrue(fire);
     joystick.x().toggleOnTrue(m_climb);
+
     joystick.y().whileTrue(feed);
     joystick.povLeft().whileTrue(m_TurretTurnLeft);
     joystick.povRight().whileTrue(m_TurretTurnRight);

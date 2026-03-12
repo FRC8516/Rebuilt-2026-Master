@@ -29,7 +29,7 @@ public class Turret extends SubsystemBase {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
     TalonFXConfiguration firingConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
     TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true)).withFeedback(new FeedbackConfigs().withRemoteCANcoder(new CoreCANcoder(29)));
-
+      
       //Set configurations
       firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
       firingConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
