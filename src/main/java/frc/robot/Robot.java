@@ -19,7 +19,6 @@ import frc.robot.subsystems.LimelightHelpers;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private boolean music = false;
   private final RobotContainer m_robotContainer;
    private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
         .withTimestampReplay()
@@ -67,34 +66,15 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     m_robotContainer.Throttle();
-    if(music == true){
-      m_robotContainer.m_Orchestra.loadMusic("Tears MC.crp");
-      System.out.println("loaded");
-      m_robotContainer.m_Orchestra.play();
-    }
   }
 
   @Override
-  public void disabledPeriodic() {
-    if (m_robotContainer.m_Orchestra.isPlaying() == false && music == true){
-      m_robotContainer.m_Orchestra.stop();
-      m_robotContainer.m_Orchestra.play();
-    }
-  }
+  public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     m_timeAndJoystickReplay.update();
-    // If robot acts up, add m_robotContainer.m_Orchestra.close(); after the stop command
-    if(music == true){
-      m_robotContainer.m_Orchestra.stop();
-        
-    }
-    music = false;
-    m_robotContainer.Throttle();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       CommandScheduler.getInstance().schedule(m_autonomousCommand);

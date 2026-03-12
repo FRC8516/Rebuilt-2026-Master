@@ -48,9 +48,7 @@ public class Climber extends SubsystemBase {
     m_ClimberMotor.getConfigurator().apply(config);
    // m_ClimberMotor.setPosition(0);
   }
-  public TalonFX getMotor(){
-    return m_ClimberMotor;
-  }
+  
   public void setPos(boolean dir){
     if (dir){
       Key = ClimberPos.Climb;

@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.AudioConfigs;
+
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -27,8 +27,8 @@ public class Turret extends SubsystemBase {
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
-    TalonFXConfiguration firingConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true));
-    TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withAudio(new AudioConfigs().withAllowMusicDurDisable(true)).withFeedback(new FeedbackConfigs().withRemoteCANcoder(new CoreCANcoder(29)));
+    TalonFXConfiguration firingConfigs = new TalonFXConfiguration();
+    TalonFXConfiguration spinConfigs = new TalonFXConfiguration().withFeedback(new FeedbackConfigs().withRemoteCANcoder(new CoreCANcoder(29)));
       
       //Set configurations
       firingConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
@@ -55,18 +55,7 @@ public class Turret extends SubsystemBase {
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
     }
-  /*
-  public TalonFX getMotorA(){
-    return m_TurretAngleMotor;
-  }
-  */
-  public TalonFX getMotorF(){
-    return m_TurretFiringMotor;
-  }
-  public TalonFX getMotorS(){
-    return m_TurretSpinMotor;
-  }
-
+  
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
    *

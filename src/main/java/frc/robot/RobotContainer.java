@@ -9,7 +9,7 @@ import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 
-import com.ctre.phoenix6.Orchestra;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -52,7 +52,7 @@ import frc.robot.commands.FixClimber;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  public final Orchestra m_Orchestra = new Orchestra();
+
   private final SendableChooser<Command> m_autoChooser;
   
   private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -104,7 +104,6 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    addMotorsToOrchestra();
     NamedCommands.registerCommand("Extend Climber",m_Extend.asProxy());
     NamedCommands.registerCommand("Retract Climber",m_Retract.asProxy());
     NamedCommands.registerCommand("Intake",m_AutoIntake.asProxy());
@@ -157,20 +156,7 @@ public class RobotContainer {
     //m_RearVision.toggleThrottle();
   }
 
-  private void addMotorsToOrchestra(){
-    m_Orchestra.addInstrument(drivetrain.getModule(0).getDriveMotor());
-    m_Orchestra.addInstrument(drivetrain.getModule(0).getSteerMotor());
-    m_Orchestra.addInstrument(drivetrain.getModule(1).getDriveMotor());
-    m_Orchestra.addInstrument(drivetrain.getModule(1).getSteerMotor());
-    m_Orchestra.addInstrument(drivetrain.getModule(2).getDriveMotor());
-    m_Orchestra.addInstrument(drivetrain.getModule(2).getSteerMotor());
-    m_Orchestra.addInstrument(drivetrain.getModule(3).getDriveMotor());
-    m_Orchestra.addInstrument(drivetrain.getModule(3).getSteerMotor());
-    m_Orchestra.addInstrument(m_Climber.getMotor());
-    //m_Orchestra.addInstrument(m_Turret.getMotorA());
-    m_Orchestra.addInstrument(m_Turret.getMotorS());
-    m_Orchestra.addInstrument(m_Turret.getMotorF());
-  }
+
 
   public Command getAutonomousCommand() {
       return m_autoChooser.getSelected();
