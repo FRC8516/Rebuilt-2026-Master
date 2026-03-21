@@ -87,7 +87,7 @@ public class RobotContainer {
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret, m_feedAndAgi, m_Agitator);
   private final intake m_intake = new intake(m_FloorIntake);
   private final output m_output = new output(m_FloorIntake, m_feedAndAgi, m_Agitator);
-  private final feed feed = new feed(m_feedAndAgi);
+  private final feed feed = new feed(m_feedAndAgi,m_Agitator);
   private final Test fire = new Test(m_Turret);
   private final Unstuck unstuck = new Unstuck(m_feedAndAgi,m_Agitator);
   private final Agitate agitate = new Agitate(m_Agitator);
