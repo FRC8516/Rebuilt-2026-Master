@@ -35,7 +35,7 @@ public class FeedAndAgi extends SubsystemBase {
   }
   public void Feed(){
     m_FeedMotor.set(ManipulatorConstants.kFeedVoltage);
-    m_AltFeed.set(ManipulatorConstants.kFeedVoltage);
+    m_AltFeed.set(ManipulatorConstants.kFeedVoltage*2);
     
    
     
@@ -47,7 +47,7 @@ public class FeedAndAgi extends SubsystemBase {
   
   public void unstuck(){
     m_FeedMotor.setVoltage(-ManipulatorConstants.kFeedVoltage);
-    m_AltFeed.setVoltage(-ManipulatorConstants.kFeedVoltage);
+    m_AltFeed.setVoltage(-ManipulatorConstants.kFeedVoltage*2);
   }
   @Override
   public void simulationPeriodic() {
