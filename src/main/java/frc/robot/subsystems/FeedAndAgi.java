@@ -37,8 +37,10 @@ public class FeedAndAgi extends SubsystemBase {
   }
   public void Feed(){
     m_FeedMotor.set(ManipulatorConstants.kFeedVoltage);
-    m_Agitator.set(ManipulatorConstants.kAgitatorVoltage);
     m_AltFeed.set(ManipulatorConstants.kFeedVoltage);
+    
+    m_Agitator.set(ManipulatorConstants.kAgitatorVoltage);
+    
   }
   public void NoFeed(){
     m_FeedMotor.stopMotor();

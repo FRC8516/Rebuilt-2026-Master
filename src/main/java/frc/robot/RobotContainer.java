@@ -42,6 +42,7 @@ import frc.robot.commands.Test;
 import frc.robot.commands.TurretSpinBackup;
 import frc.robot.commands.Unstuck;
 import frc.robot.commands.feed;
+import frc.robot.commands.Agitate;
 import frc.robot.commands.Climb;
 import frc.robot.commands.FixClimber;
 
@@ -82,11 +83,12 @@ public class RobotContainer {
   private final FeedAndAgi m_feedAndAgi = new FeedAndAgi();
   //Commands
   private final turretAim m_TurretAim = new turretAim(m_turretVision, m_Turret, m_feedAndAgi);
-  private final intake m_intake = new intake(m_FloorIntake, m_feedAndAgi);
+  private final intake m_intake = new intake(m_FloorIntake);
   private final output m_output = new output(m_FloorIntake, m_feedAndAgi);
   private final feed feed = new feed(m_feedAndAgi);
   private final Test fire = new Test(m_Turret);
   private final Unstuck unstuck = new Unstuck(m_feedAndAgi);
+  private final Agitate agitate = new Agitate(m_feedAndAgi);
 
   private final TurretSpinBackup m_TurretTurnLeft = new TurretSpinBackup(m_Turret, true);
   private final TurretSpinBackup m_TurretTurnRight = new TurretSpinBackup(m_Turret, false);
@@ -140,7 +142,7 @@ public class RobotContainer {
     joystick.leftTrigger().whileTrue(m_intake);
     joystick.leftBumper().whileTrue(m_output);
     joystick.rightTrigger().whileTrue(m_TurretAim);//this aims and fires the turret
-    //joystick.a().whileTrue(m_noclimb);
+    joystick.a().whileTrue(agitate);
     joystick.b().whileTrue(fire);
     joystick.x().toggleOnTrue(m_climb);
 
