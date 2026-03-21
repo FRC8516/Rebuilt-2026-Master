@@ -5,21 +5,24 @@
 package frc.robot.commands;
 
 
+import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.FeedAndAgi;
 import edu.wpi.first.wpilibj2.command.Command;
 
-/** An example command that uses an example subsystem. */
 public class Unstuck extends Command {
   private final FeedAndAgi m_feed;
- 
-  public Unstuck(FeedAndAgi feed) {
+  private final Agitator m_Agi;
+  public Unstuck(FeedAndAgi feed, Agitator agi) {
     m_feed = feed;
+    m_Agi = agi;
+    addRequirements(feed,agi);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_feed.unstuck();
+    m_Agi.antiAgi();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

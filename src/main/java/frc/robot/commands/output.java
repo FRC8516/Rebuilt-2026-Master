@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.FloorIntake;
 
@@ -14,18 +15,20 @@ public class output extends Command {
   
   private final FloorIntake m_Intake;
   private final FeedAndAgi m_feed;
-  public output(FloorIntake floorIntake, FeedAndAgi feed) {
+  private final Agitator m_Agitator;
+  public output(FloorIntake floorIntake, FeedAndAgi feed, Agitator agi) {
     m_Intake = floorIntake;
     m_feed = feed;
+    m_Agitator = agi;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(floorIntake,feed);
+    addRequirements(floorIntake, feed, agi);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_Intake.output();
-    m_feed.antiAgi();
+    m_Agitator.antiAgi();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,6 +40,7 @@ public class output extends Command {
   public void end(boolean interrupted) {
     m_Intake.stop();
     m_feed.NoFeed();
+    m_Agitator.stop();
   }
 
   // Returns true when the command should end.

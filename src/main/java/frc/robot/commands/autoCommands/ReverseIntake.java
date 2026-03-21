@@ -4,7 +4,7 @@
 
 package frc.robot.commands.autoCommands;
 
-import frc.robot.subsystems.FeedAndAgi;
+import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.FloorIntake;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class ReverseIntake extends Command {
   
   private final FloorIntake m_Intake;
-  private final FeedAndAgi m_Agitator;
-  public ReverseIntake(FloorIntake floorIntake, FeedAndAgi agi) {
+  private final Agitator m_Agitator;
+  public ReverseIntake(FloorIntake floorIntake, Agitator agi) {
     m_Intake = floorIntake;
     m_Agitator = agi;
     // Use addRequirements() here to declare subsystem dependencies.

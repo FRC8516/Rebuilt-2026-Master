@@ -5,15 +5,15 @@
 package frc.robot.commands;
 
 
-import frc.robot.subsystems.FeedAndAgi;
+import frc.robot.subsystems.Agitator;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class Agitate extends Command {
   
-  private final FeedAndAgi m_Agi;
-  public Agitate(FeedAndAgi agi) {
+  private final Agitator m_Agi;
+  public Agitate(Agitator agi) {
     m_Agi = agi;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -33,7 +33,7 @@ public class Agitate extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Agi.NoFeed();
+    m_Agi.stop();
   }
 
   // Returns true when the command should end.
