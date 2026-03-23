@@ -79,6 +79,7 @@ public class Robot extends TimedRobot {
     SignalLogger.start();
     m_timeAndJoystickReplay.update();
     // schedule the autonomous command (example)
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     if (m_autonomousCommand != null) {
       CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }

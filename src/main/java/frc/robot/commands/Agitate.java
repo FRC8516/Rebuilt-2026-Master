@@ -4,31 +4,26 @@
 
 package frc.robot.commands;
 
+
 import frc.robot.subsystems.Agitator;
-import frc.robot.subsystems.FeedAndAgi;
-import frc.robot.subsystems.FloorIntake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class output extends Command {
+public class Agitate extends Command {
   
-  private final FloorIntake m_Intake;
-  private final FeedAndAgi m_feed;
-  private final Agitator m_Agitator;
-  public output(FloorIntake floorIntake, FeedAndAgi feed, Agitator agi) {
-    m_Intake = floorIntake;
-    m_feed = feed;
-    m_Agitator = agi;
+  private final Agitator m_Agi;
+  public Agitate(Agitator agi) {
+    m_Agi = agi;
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(floorIntake, feed, agi);
+    addRequirements(agi);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Intake.output();
-    m_Agitator.antiAgi();
+    m_Agi.Agitate();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,9 +33,7 @@ public class output extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Intake.stop();
-    m_feed.NoFeed();
-    m_Agitator.stop();
+    m_Agi.stop();
   }
 
   // Returns true when the command should end.

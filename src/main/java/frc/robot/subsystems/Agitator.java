@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
@@ -9,14 +8,16 @@ import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorConstants;
 
-public class FeedAndAgi extends SubsystemBase {
-  private final SparkFlex m_FeedMotor = new SparkFlex(ManipulatorConstants.kFeedMotor,MotorType.kBrushless);
-  private final TalonFX m_AltFeed = new TalonFX(ManipulatorConstants.kAltFeedMotor);
-  public FeedAndAgi() {
+public class Agitator extends SubsystemBase {
+  /** Creates a new ExampleSubsystem. */
+   
+    private final SparkFlex m_Agitator = new SparkFlex(ManipulatorConstants.kAgitatorMotor,MotorType.kBrushless);
+   
+  public Agitator() {
     //Need to apply configs to motor, Unknown how much change is needed
     SparkBaseConfig configs = new SparkFlexConfig();
       //Set configurations  
@@ -24,30 +25,30 @@ public class FeedAndAgi extends SubsystemBase {
     //Set configurations  
     configs.inverted(false);
     configs.idleMode(IdleMode.kCoast);
-    configs.smartCurrentLimit(100);
-    
-    m_FeedMotor.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+    configs.smartCurrentLimit(80);
+    m_Agitator.configureAsync(configs, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+   
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void Feed(){
-    m_FeedMotor.set(ManipulatorConstants.kFeedVoltage);
-    m_AltFeed.set(ManipulatorConstants.kFeedVoltage*2);
-    
-   
-    
+  public void Agitate(){
+    for(var i = 0; i>100; i++){
+    //if (i==90){m_Agitator.set(15);}
+      SmartDashboard.putNumber("wasteing time", i);
+    }
+    m_Agitator.set(5);
   }
-  public void NoFeed(){
-    m_FeedMotor.stopMotor();
-    m_AltFeed.stopMotor();
+  public void instantAgitate(){
+    m_Agitator.set(5);
   }
-  
-  public void unstuck(){
-    m_FeedMotor.setVoltage(-ManipulatorConstants.kFeedVoltage);
-    m_AltFeed.setVoltage(-ManipulatorConstants.kFeedVoltage*2);
+  public void antiAgi(){
+    m_Agitator.set(-5);
+  }
+  public void stop(){
+    m_Agitator.stopMotor();
   }
   @Override
   public void simulationPeriodic() {

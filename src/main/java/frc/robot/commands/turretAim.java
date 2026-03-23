@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
@@ -13,12 +14,14 @@ public class turretAim extends Command {
   private final Turret m_turret;
   private final Vision m_Vision;
   private final FeedAndAgi m_feed;
+  private final Agitator m_Agi;
   private double m_wantedPos;
    private final PositionVoltage m_request = new PositionVoltage(0).withSlot(0);
-  public turretAim(Vision TurretVision, Turret TurretSubsytem, FeedAndAgi agitator) {
+  public turretAim(Vision TurretVision, Turret TurretSubsytem, FeedAndAgi feed, Agitator agitator) {
     m_Vision = TurretVision;
     m_turret = TurretSubsytem;
-    m_feed = agitator;
+    m_feed = feed;
+    m_Agi = agitator;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Vision, m_turret,m_feed);
   }
@@ -41,8 +44,10 @@ public class turretAim extends Command {
     m_turret.setTurretPos(m_request.withPosition(m_turret.RotPos()+m_wantedPos));
     if (-0.75 <= m_wantedPos && m_wantedPos <= 0.75){
       m_feed.Feed();
+      m_Agi.Agitate();
     }else{
       m_feed.NoFeed();
+      m_Agi.stop();
     }
 
   }
