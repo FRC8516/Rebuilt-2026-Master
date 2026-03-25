@@ -31,6 +31,8 @@ public final class Constants {
         public static final int kTurretRotationMotor = 26;
         //Turret Angle Motor - 
         public static final int kTurretAngleMotor = 1;
+        //Turret Alt Firing motor
+        public static final int kAltFiringMotor = 36;
         //Turret Firing Motor - 
         public static final int kTurretFiringMotor = 25;
         //Climber Motor - 

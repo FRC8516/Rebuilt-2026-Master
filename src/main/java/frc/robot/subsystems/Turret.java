@@ -6,11 +6,13 @@ import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.core.CoreCANcoder;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,9 +24,10 @@ public class Turret extends SubsystemBase {
     private final TalonFX m_TurretSpinMotor = new TalonFX(ManipulatorConstants.kTurretRotationMotor);
    //private final TalonFX m_TurretAngleMotor = new TalonFX(ManipulatorConstants.kTurretAngleMotor);
     private final TalonFX m_TurretFiringMotor = new TalonFX(ManipulatorConstants.kTurretFiringMotor);
-   
+    private final TalonFX m_TurretUpperFiringMotor = new TalonFX(ManipulatorConstants.kAltFiringMotor);
       /* Keep a brake request so we can disable the motor */
       private final NeutralOut m_Coast = new NeutralOut();
+      private final Follower m_Follow = new Follower(ManipulatorConstants.kTurretFiringMotor, MotorAlignmentValue.Opposed);
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
@@ -56,7 +59,8 @@ public class Turret extends SubsystemBase {
     //m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
-    }
+    m_TurretUpperFiringMotor.getConfigurator().apply(spinConfigs);
+  }
   
   /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
@@ -81,9 +85,12 @@ public class Turret extends SubsystemBase {
   
   public void Fire(){
     m_TurretFiringMotor.setControl(new VelocityTorqueCurrentFOC(200).withSlot(0));
+    m_TurretUpperFiringMotor.setControl(m_Follow);
   }
   public void CeaseFire(){
     m_TurretFiringMotor.setControl(m_Coast);
+    m_TurretUpperFiringMotor.setControl(m_Coast);
+    
   }
   public void setTurretPos(ControlRequest Position){
       m_TurretSpinMotor.setControl(Position);
