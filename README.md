@@ -5,11 +5,13 @@ FRC 8516 Wired Up
 ## Description
 
 Drive Train: Swerve-drive
+
     - Drivetrain composed of four SDS MK4 L3 Billet Modules, 
     each configured with two Kraken X60, 
     CTRE Can Encoder Through Bore Encoder as the absolute turning encoder.
 
 Actuators: 
+
     Falcon 500 - Climber
     Kraken X60 - Drivetrain, Flywheel
     Kraken X44 - Turret, Feed
