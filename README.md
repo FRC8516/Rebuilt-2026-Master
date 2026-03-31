@@ -4,17 +4,23 @@ FRC 8516 Wired Up
 
 ## Description
 
-Drive Train: swerve drivetrain that uses Swerve Drive Specialties MK4 L3 Billet.
-- drivetrain composed of four MK4 L3 Billet Modules, each configured with two Karken X60, CTRE Can Encoder Through Bore Encoder as the absolute turning encoder.
+Drive Train: Swerve-drive
+    - Drivetrain composed of four SDS MK4 L3 Billet Modules, 
+    each configured with two Kraken X60, 
+    CTRE Can Encoder Through Bore Encoder as the absolute turning encoder.
 
-Actuators: Falcon 500, Karken X60 using Pigeon 2.
--PID for climber positions.
+Actuators: 
+    Falcon 500 - Climber
+    Kraken X60 - Drivetrain, Flywheel
+    Kraken X44 - Turret, Feed
+    SparkFLEX - Intake, Agitator
+    Pigeon 2 - Accelerometer 
 
 ## Prerequisites
 * WPI 2026.2.1
 * Phoenix 6 v26.1.1 - Adds features that are required for swerve and mechanism
-* Rev 6 v26.0.4 -- Includes APIs for firmware features Flex Spark Maxs
-* Pathplanner v26.1.2
+* Rev 6 v26.0.4 - Includes APIs for firmware features Flex Spark Maxs
+* Pathplanner v26.1.2 - Autonomous path following API
 
 ## Configuration
 
