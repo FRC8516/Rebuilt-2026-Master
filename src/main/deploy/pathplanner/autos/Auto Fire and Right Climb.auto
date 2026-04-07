@@ -34,6 +34,37 @@
           "data": {
             "name": "endFire"
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Extend Climber"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Middle Fire to Right Climb"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right climb to climbed"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Retract Climber"
+          }
         }
       ]
     }
