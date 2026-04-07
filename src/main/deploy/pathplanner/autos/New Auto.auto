@@ -17,10 +17,22 @@
               {
                 "type": "named",
                 "data": {
-                  "name": null
+                  "name": "Fire"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "endFire"
           }
         }
       ]

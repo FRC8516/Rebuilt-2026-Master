@@ -28,7 +28,7 @@ public class Climber extends SubsystemBase {
       private double backUp;
       private String Key;
       /* Keep a brake request so we can disable the motor */
-      private final NeutralOut m_brake = new NeutralOut();
+      //private final NeutralOut m_brake = new NeutralOut();
       //private double scale = 360;
       private final PositionVoltage m_mmReq = new PositionVoltage(0).withSlot(0);
 
