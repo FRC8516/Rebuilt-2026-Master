@@ -59,7 +59,7 @@ public class Turret extends SubsystemBase {
     //m_TurretAngleMotor.getConfigurator().apply(angleConfigs);
     m_TurretFiringMotor.getConfigurator().apply(firingConfigs);
     m_TurretSpinMotor.getConfigurator().apply(spinConfigs);
-    m_TurretUpperFiringMotor.getConfigurator().apply(spinConfigs);
+    m_TurretUpperFiringMotor.getConfigurator().apply(firingConfigs);
   }
   
   /**
@@ -85,7 +85,7 @@ public class Turret extends SubsystemBase {
   
   public void Fire(){
     m_TurretFiringMotor.setControl(new VelocityTorqueCurrentFOC(200).withSlot(0));
-    m_TurretUpperFiringMotor.setControl(m_Follow);
+    m_TurretUpperFiringMotor.setControl(m_Follow.withLeaderID(ManipulatorConstants.kTurretFiringMotor));
   }
   public void CeaseFire(){
     m_TurretFiringMotor.setControl(m_Coast);
