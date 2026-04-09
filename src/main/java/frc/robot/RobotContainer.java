@@ -99,7 +99,7 @@ public class RobotContainer {
   private final FixClimber m_FixClimberDown = new FixClimber(m_Climber, false);
   private final FixClimber m_FixClimberUp = new FixClimber(m_Climber, true);
   //Auto Commands
-  
+  private final turretAim m_autoTurretAim = new turretAim(m_turretVision, m_Turret, m_feedAndAgi, m_Agitator);
   private final ExtendClimber m_Extend = new ExtendClimber(m_Climber);
   private final RetractClimber m_Retract = new RetractClimber(m_Climber);
   private final RunIntake m_AutoIntake = new RunIntake(m_FloorIntake,m_Agitator);
@@ -113,8 +113,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake",m_AutoIntake.asProxy());
     NamedCommands.registerCommand("StopIntake",m_StopIntake.asProxy());
     NamedCommands.registerCommand("Output", m_ReverseIntake.asProxy());
-    NamedCommands.registerCommand("Fire", m_TurretAim.asProxy());
-    NamedCommands.registerCommand("endFire", m_TurretAim.endFire());
+    NamedCommands.registerCommand("Fire", m_autoTurretAim.withTimeout(2).asProxy());
     // Configure the trigger bindings
     m_autoChooser = AutoBuilder.buildAutoChooser();
     configureBindings();

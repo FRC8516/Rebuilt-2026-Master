@@ -27,7 +27,7 @@ public class Turret extends SubsystemBase {
     private final TalonFX m_TurretUpperFiringMotor = new TalonFX(ManipulatorConstants.kAltFiringMotor);
       /* Keep a brake request so we can disable the motor */
       private final NeutralOut m_Coast = new NeutralOut();
-      private final Follower m_Follow = new Follower(ManipulatorConstants.kTurretFiringMotor, MotorAlignmentValue.Opposed);
+      // private final Follower m_Follow = new Follower(ManipulatorConstants.kTurretFiringMotor, MotorAlignmentValue.Opposed);
   /** Creates a new TurretSubsytem. */
   public Turret() {
    // TalonFXConfiguration angleConfigs = new TalonFXConfiguration();
@@ -84,8 +84,8 @@ public class Turret extends SubsystemBase {
 
   
   public void Fire(){
-    m_TurretFiringMotor.setControl(new VelocityTorqueCurrentFOC(200).withSlot(0));
-    m_TurretUpperFiringMotor.setControl(m_Follow.withLeaderID(ManipulatorConstants.kTurretFiringMotor));
+    m_TurretFiringMotor.setControl(new VelocityTorqueCurrentFOC(60).withSlot(0));
+    m_TurretUpperFiringMotor.setControl(new VelocityTorqueCurrentFOC(-104).withSlot(0));
   }
   public void CeaseFire(){
     m_TurretFiringMotor.setControl(m_Coast);
@@ -94,6 +94,9 @@ public class Turret extends SubsystemBase {
   }
   public void setTurretPos(ControlRequest Position){
       m_TurretSpinMotor.setControl(Position);
+  }
+  public double getTurretRPM(){
+    return m_TurretFiringMotor.getRotorVelocity().getValueAsDouble();
   }
   //backup commands if limelight fails
   public void turnRight(){

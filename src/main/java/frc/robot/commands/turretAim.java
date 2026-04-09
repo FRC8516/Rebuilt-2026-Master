@@ -5,7 +5,6 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Agitator;
 import frc.robot.subsystems.FeedAndAgi;
 import frc.robot.subsystems.Turret;
@@ -17,12 +16,14 @@ public class turretAim extends Command {
   private final FeedAndAgi m_feed;
   private final Agitator m_Agi;
   private double m_wantedPos;
+  private double m_errorRPM;
    private final PositionVoltage m_request = new PositionVoltage(0).withSlot(0);
   public turretAim(Vision TurretVision, Turret TurretSubsytem, FeedAndAgi feed, Agitator agitator) {
     m_Vision = TurretVision;
     m_turret = TurretSubsytem;
     m_feed = feed;
     m_Agi = agitator;
+   
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Vision, m_turret,m_feed);
   }
@@ -42,14 +43,17 @@ public class turretAim extends Command {
     m_wantedPos = Math.toDegrees(Math.atan((m_Vision.getAvgTX()/m_Vision.getAvgTA())))/360;
     SmartDashboard.putNumber("Pos", m_wantedPos);
     SmartDashboard.putNumber("Requested Pos", m_turret.RotPos()+m_wantedPos);
+    SmartDashboard.putNumber("rpm", m_turret.getTurretRPM());
+    m_errorRPM = 2500-m_turret.getTurretRPM();
     m_turret.setTurretPos(m_request.withPosition(m_turret.RotPos()+m_wantedPos));
-    if (-0.75 <= m_wantedPos && m_wantedPos <= 0.75){
+    if ((-0.75 <= m_wantedPos && m_wantedPos <= 0.75) && (-50 <= m_errorRPM && m_errorRPM <= 50)){
       m_feed.Feed();
       m_Agi.Agitate();
     }else{
       m_feed.NoFeed();
       m_Agi.stop();
     }
+    
 
   }
 
@@ -58,6 +62,7 @@ public class turretAim extends Command {
   public void end(boolean interrupted) {
     m_turret.setTurretPos(m_request.withPosition(m_turret.RotPos()));
     m_feed.NoFeed();
+    m_Agi.stop();
     m_turret.CeaseFire();
   }
 
@@ -65,9 +70,5 @@ public class turretAim extends Command {
   @Override
   public boolean isFinished() {
     return false;
-  }
-  public Command endFire(){
-    end(false);
-    return new InstantCommand();
   }
 }
