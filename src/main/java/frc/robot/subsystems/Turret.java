@@ -15,6 +15,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.CalibrationSettings;
 import frc.robot.Constants.ManipulatorConstants;
@@ -84,8 +85,8 @@ public class Turret extends SubsystemBase {
 
   
   public void Fire(){
-    m_TurretFiringMotor.setControl(new VelocityTorqueCurrentFOC(60).withSlot(0));
-    m_TurretUpperFiringMotor.setControl(new VelocityTorqueCurrentFOC(-104).withSlot(0));
+    m_TurretFiringMotor.setControl(new VelocityTorqueCurrentFOC(getPreferencesDouble("ForwardFiringRPM", 60)).withSlot(0));
+    m_TurretUpperFiringMotor.setControl(new VelocityTorqueCurrentFOC(getPreferencesDouble("RearFiringRPM", -104)).withSlot(0));
   }
   public void CeaseFire(){
     m_TurretFiringMotor.setControl(m_Coast);
@@ -111,5 +112,11 @@ public class Turret extends SubsystemBase {
   public double RotPos(){
     return m_TurretSpinMotor.getPosition().getValueAsDouble();
   }
-  
+  private double getPreferencesDouble(String key, double backup) {
+      if (!Preferences.containsKey(key)) {
+        Preferences.initDouble(key, backup);
+        Preferences.setDouble(key, backup);
+      }
+      return Preferences.getDouble(key, backup);
+  }
 }

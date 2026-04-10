@@ -16,7 +16,6 @@ public class turretAim extends Command {
   private final FeedAndAgi m_feed;
   private final Agitator m_Agi;
   private double m_wantedPos;
-  private double m_errorRPM;
    private final PositionVoltage m_request = new PositionVoltage(0).withSlot(0);
   public turretAim(Vision TurretVision, Turret TurretSubsytem, FeedAndAgi feed, Agitator agitator) {
     m_Vision = TurretVision;
@@ -43,10 +42,8 @@ public class turretAim extends Command {
     m_wantedPos = Math.toDegrees(Math.atan((m_Vision.getAvgTX()/m_Vision.getAvgTA())))/360;
     SmartDashboard.putNumber("Pos", m_wantedPos);
     SmartDashboard.putNumber("Requested Pos", m_turret.RotPos()+m_wantedPos);
-    SmartDashboard.putNumber("rpm", m_turret.getTurretRPM());
-    m_errorRPM = 2500-m_turret.getTurretRPM();
     m_turret.setTurretPos(m_request.withPosition(m_turret.RotPos()+m_wantedPos));
-    if ((-0.75 <= m_wantedPos && m_wantedPos <= 0.75) && (-50 <= m_errorRPM && m_errorRPM <= 50)){
+    if (-0.75 <= m_wantedPos && m_wantedPos <= 0.75){
       m_feed.Feed();
       m_Agi.Agitate();
     }else{
